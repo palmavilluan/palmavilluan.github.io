@@ -4,24 +4,33 @@
   <meta charset="utf-8">
   <title>A-Frame Black Room</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <link rel="stylesheet" href="aframe.css">
 </head>
 
-  <body>
-    <!--create a-scene element-->
-    <a-scene>
-      <!-- Create a black sky -->
-      <a-sky color="#000"></a-sky>
+<body>
+  <!--create a-scene element-->
+  <a-scene>
+    <!-- give sky a gradient -->
+    <a-sky color="#00" src="sky_texture.png"></a-sky>
 
-      <!-- Create black walls -->
-      <a-box position="0 0 -5" width="10" height="10" depth="0.1" color="#000"></a-box>
-      <a-box position="0 0 5" width="10" height="10" depth="0.1" color="#000"></a-box>
-      <a-box position="-5 0 0" width="0.1" height="10" depth="10" color="#000"></a-box>
-      <a-box position="5 0 0" width="0.1" height="10" depth="10" color="#000"></a-box>
+    <!-- black walls -->
+    <a-box position="0 0 -5" width="10" height="10" depth="0.1" color="#000"></a-box>
+    <a-box position="0 0 5" width="10" height="10" depth="0.1" color="#000"></a-box>
+    <a-box position="-5 0 0" width="0.1" height="10" depth="10" color="#000"></a-box>
+    <a-box position="5 0 0" width="0.1" height="10" depth="10" color="#000"></a-box>
 
-      <!-- Add your content here -->
+    <!-- Content -->
+    <a-sphere position="0 1.5 -2" radius="1" color="#f00"></a-sphere>
+  
+    <!-- Camera -->
+    <a-camera position="0 1.8 0"></a-camera>
+  
+  </a-scene>
+</body>
 
-      <!-- Example: Add a sphere in the center -->
-      <a-sphere position="0 1.5 -2" radius="1" color="#f00"></a-sphere>
-    </a-scene>
-  </body>
+
+
+<!-- import javascript -->
+<script src="aframe.js"></script>
+
 </html>
