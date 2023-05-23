@@ -39,3 +39,4 @@ AFRAME.registerComponent('rotation-reader', {
     console.log(this.el.object3D.position);
   }
 });
+
