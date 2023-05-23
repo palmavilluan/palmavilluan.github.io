@@ -4,8 +4,6 @@
   <meta charset="utf-8">
   <title>A-Frame Black Room</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <!-- physics for A-Frame -->
-  <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v$npm_package_version/dist/aframe-physics-system.min.js"></script>
 </head>
 
 <body>
@@ -15,11 +13,10 @@
     <a-sky src="img/sky_texture.png"></a-sky>
 
     <!-- black walls -->
-    <!-- <a-box position="0 0 -20" width="40" height="10" depth="0.1" color="#000"></a-box>
+    <a-box position="0 0 -20" width="40" height="10" depth="0.1" color="#000"></a-box>
     <a-box position="0 0 20" width="40" height="10" depth="0.1" color="#000"></a-box>
     <a-box position="-20 0 0" width="0.1" height="10" depth="40" color="#000"></a-box>
-    <a-box position="20 0 0" width="0.1" height="10" depth="40" color="#000"></a-box> -->
-
+    <a-box position="20 0 0" width="0.1" height="10" depth="40" color="#000"></a-box>
     <!-- Content -->
     <!-- <a-box 
       id="image 1"
@@ -31,8 +28,16 @@
     </a-box> -->
 
     <!-- Camera -->
-    <a-camera position="0 1.8 5"></a-camera>
-  
+    <a-camera
+    position="0 1 4"
+    cursor-visible="true"
+    cursor-scale="20"
+    cursor-color="red"
+    cursor-opacity="0"
+    rotation-reader
+    >
+  </a-camera>
+
   </a-scene>
 </body>
 
