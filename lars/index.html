@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>A-Frame Black Room</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-area-light-component/dist/aframe-area-light-component.min.js"></script>
 </head>
 
 <body>
@@ -83,26 +84,38 @@
 
     <!-- Wall left -->
     <a-box 
-    position="-20 3 10"
+    position="-20 3 2.5"
     rotation="0 90 0"
     width="25.2"
     height="6"
     depth="0.1"
-    color="white"
+    color="grey"
     shadow="receive: true;">
-    <a-box 
-    id="test"
-    position="0 0 1"
-    scale=".8 .8 .8"
-    width="25.2"
-    height="6"
-    depth="0.1"
-    color="red"
-    shadow="receive: true;">
-    </a-box>
     </a-box>
 
 
+    <a-entity
+    id="bodenlicht" 
+    area-light="
+    intensity: 1;
+    width: 40; 
+    height: 1; 
+    color: white; 
+    penumbra: 1;" 
+    position="-20 0.01 -9.9" 
+    rotation="90 0 0"
+    ></a-entity>
+    <a-entity
+    id="deckenlicht" 
+    area-light="
+    intensity: 1;
+    width: 40; 
+    height: 1; 
+    color: white; 
+    penumbra: 1;" 
+    position="-20 5.99 -9.9" 
+    rotation="-90 0 0"
+    ></a-entity>
 
 
 
@@ -118,7 +131,7 @@
     </a-plane>
     <!-- Wall behind -->
     <a-box 
-    position="0 3.75 20"
+    position="0 3.75 15"
     rotation="0 180 0"
     width="40"
     height="7.5"
@@ -139,6 +152,11 @@
     rotation="0 90 0"
     ></a-entity> -->
 
+
+   
+
+    
+  
   </a-scene>
 </body>
 
