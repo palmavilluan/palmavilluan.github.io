@@ -11,20 +11,11 @@
   <!--create a-scene element-->
   <a-scene id="aScene">
    
-    <!-- give sky a gradient -->
+    <!-- sky -->
     <!-- <a-sky src="img/sky_texture.png"></a-sky> -->
     <!-- <a-sky src="img/0004.png"></a-sky> -->
     <a-sky color="#000"></a-sky>
 
-    <!-- Content -->
-    <!-- <a-box 
-      id="image 1"
-      position="0 0 0"
-      width=".1"
-      height="100"
-      depth=".1"
-      color="red">
-    </a-box> -->
 
     <!-- Camera -->
     <a-camera
@@ -35,122 +26,140 @@
     cursor-opacity="0"
     ></a-camera>
 
-
-    <!-- Floor -->
-    <a-plane 
-    color="white" 
-    rotation="-90 0 0" 
-    scale="100 100 1"
-    position="0 0 0"
-    repeat="20 20 0"
-    shadow="receive: true;">
-    </a-plane>
+    <!-- Flächen -->
+      <!-- Floor -->
+      <a-plane 
+      color="white" 
+      rotation="-90 0 0" 
+      scale="100 100 1"
+      position="0 0 0"
+      repeat="20 20 0"
+      shadow="receive: true;"
+      roughness="1">
+      </a-plane>
+      
+      <!-- roof -->
+      <a-plane 
+      color="white" 
+      rotation="-90 0 0" 
+      scale="100 100 -1"
+      position="0 6 0"
+      repeat="20 20 0"
+      shadow="receive: true;">
+      </a-plane>
+    <!-- /Flächen -->
     
-    <!-- roof -->
-    <a-plane 
-    color="white" 
-    rotation="-90 0 0" 
-    scale="100 100 -1"
-    position="0 6 0"
-    repeat="20 20 0"
-    shadow="receive: true;">
-    </a-plane>
 
-    <!-- ambient light -->
-    <!-- <a-entity 
-    light="
-    type: ambient;
-    intensity: .4" >
-    </a-entity> -->
+    <!-- Wände -->
+      <!-- point light -->
+      <a-entity 
+      id="roomLight"
+      light="
+      type: point;
+      intensity: .4"
+      position="0 3.75 5" >
+      </a-entity>
 
-    <!-- point light -->
-    <a-entity 
-    id="roomLight"
-    light="
-    type: point;
-    intensity: .4"
-    position="0 3.75 5" >
-    </a-entity>
+      <!-- Wall behind images -->
+      <a-box 
+      position="0 3 -10"
+      width="40"
+      height="6"
+      depth="0.1"
+      color="white"
+      shadow="receive: true;">
+      </a-box>
 
-    <!-- Wall behind images -->
-    <a-box 
-    position="0 3 -10"
-    width="40"
-    height="6"
-    depth="0.1"
-    color="white"
-    shadow="receive: true;">
-    </a-box>
+      <!-- Wall left -->
+      <a-box 
+      position="-20 3 2.5"
+      rotation="0 90 0"
+      width="25.2"
+      height="6"
+      depth="0.1"
+      color="grey"
+      shadow="receive: true;">
+      </a-box>
 
-    <!-- Wall left -->
-    <a-box 
-    position="-20 3 2.5"
-    rotation="0 90 0"
-    width="25.2"
-    height="6"
-    depth="0.1"
-    color="grey"
-    shadow="receive: true;">
-    </a-box>
+      <!-- Wall right -->
+      <a-plane 
+      position="20 3.75 0"
+      rotation="0 -90 0"
+      width="40"
+      height="7.5"
+      depth="0.1"
+      color="white"
+      shadow="receive: true;">
+      </a-plane>
+      <!-- Wall behind -->
+      <a-box 
+      position="0 3.75 15"
+      rotation="0 180 0"
+      width="40"
+      height="7.5"
+      depth="0.1"
+      color="white"
+      shadow="receive: true;">
+      </a-box>
+    <!-- /Wände -->
+
+    
+    <!-- Lichter -->
+      <a-entity
+      id="bodenlicht" 
+      area-light="
+      intensity: 1;
+      width: 40; 
+      height: 1; 
+      color: white; 
+      penumbra: 1;" 
+      position="-20 0.001 -9.5" 
+      rotation="90 0 0"
+      ></a-entity>
+      <a-entity
+      id="bodenlicht2" 
+      area-light="
+      intensity: 1;
+      width: 40; 
+      height: 1; 
+      color: white; 
+      penumbra: 1;" 
+      position="-20 0 -9.99" 
+      rotation="-180 0 0"
+      ></a-entity>
+
+      <a-entity
+      id="deckenlicht" 
+      area-light="
+      intensity: 1;
+      width: 40; 
+      height: 1; 
+      color: white; 
+      penumbra: 1;" 
+      position="-20 5.99 -9.99" 
+      rotation="-90 0 0"
+      ></a-entity>
 
 
-    <a-entity
-    id="bodenlicht" 
-    area-light="
-    intensity: 1;
-    width: 40; 
-    height: 1; 
-    color: white; 
-    penumbra: 1;" 
-    position="-20 0.01 -9.9" 
-    rotation="90 0 0"
-    ></a-entity>
-    <a-entity
-    id="deckenlicht" 
-    area-light="
-    intensity: 1;
-    width: 40; 
-    height: 1; 
-    color: white; 
-    penumbra: 1;" 
-    position="-20 5.99 -9.9" 
-    rotation="-90 0 0"
-    ></a-entity>
+      <!-- ambient light -->
+      <!-- <a-entity 
+      light="
+      type: ambient;
+      intensity: .4" >
+      </a-entity> -->
 
-
-
-    <!-- Wall right -->
-    <a-plane 
-    position="20 3.75 0"
-    rotation="0 -90 0"
-    width="40"
-    height="7.5"
-    depth="0.1"
-    color="white"
-    shadow="receive: true;">
-    </a-plane>
-    <!-- Wall behind -->
-    <a-box 
-    position="0 3.75 15"
-    rotation="0 180 0"
-    width="40"
-    height="7.5"
-    depth="0.1"
-    color="white"
-    shadow="receive: true;">
-    </a-box>
-
-    <!-- <a-entity
-    light="
-    type: spot;
-    color: white;
-    intensity: 1;
-    castShadow: true;
-    penumbra: 0.1;
-    angle: 20;"
-    position="0 0 0"
-    rotation="0 90 0"
-    ></a-entity> -->
+      <!-- <a-entity
+      light="
+      type: spot;
+      color: white;
+      intensity: 1;
+      castShadow: true;
+      penumbra: 0.1;
+      angle: 20;"
+      position="0 0 0"
+      rotation="0 90 0"
+      ></a-entity> -->
+    <!-- /Lichter -->
 
 
    
