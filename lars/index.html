@@ -8,16 +8,13 @@
 
 <body>
   <!--create a-scene element-->
-  <a-scene physics=" driver: ammo; debug: true; debugDrawMode: 1;" id="aScene">
+  <a-scene id="aScene">
+   
     <!-- give sky a gradient -->
     <!-- <a-sky src="img/sky_texture.png"></a-sky> -->
-    <a-sky src="img/0004.png"></a-sky>
+    <!-- <a-sky src="img/0004.png"></a-sky> -->
+    <a-sky color="#000"></a-sky>
 
-    <!-- black walls -->
-    <!-- <a-box position="0 0 -20" width="40" height="10" depth="0.1" color="#000"></a-box>
-    <a-box position="0 0 20" width="40" height="10" depth="0.1" color="#000"></a-box>
-    <a-box position="-20 0 0" width="0.1" height="10" depth="40" color="#000"></a-box>
-    <a-box position="20 0 0" width="0.1" height="10" depth="40" color="#000"></a-box> -->
     <!-- Content -->
     <!-- <a-box 
       id="image 1"
@@ -30,14 +27,117 @@
 
     <!-- Camera -->
     <a-camera
-    position="0 1 4"
+    position="0 1.6 0"
     cursor-visible="true"
     cursor-scale="20"
     cursor-color="red"
     cursor-opacity="0"
-    rotation-reader
-    >
-  </a-camera>
+    ></a-camera>
+
+
+    <!-- Floor -->
+    <a-plane 
+    color="white" 
+    rotation="-90 0 0" 
+    scale="100 100 1"
+    position="0 0 0"
+    repeat="20 20 0"
+    shadow="receive: true;">
+    </a-plane>
+    
+    <!-- roof -->
+    <a-plane 
+    color="white" 
+    rotation="-90 0 0" 
+    scale="100 100 -1"
+    position="0 6 0"
+    repeat="20 20 0"
+    shadow="receive: true;">
+    </a-plane>
+
+    <!-- ambient light -->
+    <!-- <a-entity 
+    light="
+    type: ambient;
+    intensity: .4" >
+    </a-entity> -->
+
+    <!-- point light -->
+    <a-entity 
+    id="roomLight"
+    light="
+    type: point;
+    intensity: .4"
+    position="0 3.75 5" >
+    </a-entity>
+
+    <!-- Wall behind images -->
+    <a-box 
+    position="0 3 -10"
+    width="40"
+    height="6"
+    depth="0.1"
+    color="white"
+    shadow="receive: true;">
+    </a-box>
+
+    <!-- Wall left -->
+    <a-box 
+    position="-20 3 10"
+    rotation="0 90 0"
+    width="25.2"
+    height="6"
+    depth="0.1"
+    color="white"
+    shadow="receive: true;">
+    <a-box 
+    id="test"
+    position="0 0 1"
+    scale=".8 .8 .8"
+    width="25.2"
+    height="6"
+    depth="0.1"
+    color="red"
+    shadow="receive: true;">
+    </a-box>
+    </a-box>
+
+
+
+
+
+    <!-- Wall right -->
+    <a-plane 
+    position="20 3.75 0"
+    rotation="0 -90 0"
+    width="40"
+    height="7.5"
+    depth="0.1"
+    color="white"
+    shadow="receive: true;">
+    </a-plane>
+    <!-- Wall behind -->
+    <a-box 
+    position="0 3.75 20"
+    rotation="0 180 0"
+    width="40"
+    height="7.5"
+    depth="0.1"
+    color="white"
+    shadow="receive: true;">
+    </a-box>
+
+    <!-- <a-entity
+    light="
+    type: spot;
+    color: white;
+    intensity: 1;
+    castShadow: true;
+    penumbra: 0.1;
+    angle: 20;"
+    position="0 0 0"
+    rotation="0 90 0"
+    ></a-entity> -->
 
   </a-scene>
 </body>

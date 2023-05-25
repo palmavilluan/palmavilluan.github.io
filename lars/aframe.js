@@ -9,34 +9,48 @@ galleryCenter = (max+1)/2;
 
 while (i <= max) {
 
-  // console.log(path + i);
   newImg = document.createElement("a-box");
 
   newImg.setAttribute("src", path + "img" + i + ".jpg");
-  newImg.setAttribute("id", "image " + i);
-  newImg.setAttribute("position", (i-(max+1)/2)*(imageWidth+gapWidth) + " 2 -5");
+  newImg.setAttribute("id", "image" + i);
+  newImg.setAttribute("position", (i-(max+1)/2)*(imageWidth+gapWidth) + " 3 -9.8");
   newImg.setAttribute("color", "white");
   newImg.setAttribute("class", "image");
   newImg.setAttribute("width", imageWidth);
   newImg.setAttribute("height", 5);
   newImg.setAttribute("depth", "0.01%");
+  newImg.setAttribute("shadow", "cast: true; receive: true");
 
-  // console.log(newImg);
   document.getElementById("aScene").appendChild(newImg);
+
+// individual light for each image
+  newLight = document.createElement("a-entity");
+
+  newLight.setAttribute("light", "type: spot; penumbra: 0.1; color: white; intensity: 1; castShadow: true; target: #image"+i+"; angle: 20;");
+  newLight.setAttribute("position", (i-(max+1)/2)*(imageWidth+gapWidth) + " 6 -3");
+
+  document.getElementById("aScene").appendChild(newLight);
+
   i++;
+
 }
 
+// newLight = document.createElement("a-entity");
 
-AFRAME.registerComponent('rotation-reader', {
-  tick: function () {
-    // `this.el` is the element.
-    // `object3D` is the three.js object.
+// newLight.setAttribute("light", "type: spot; penumbra: 0.1; color: white; intensity: 1; castShadow: true; target: #image3; angle: 20;");
+// newLight.setAttribute("position", "0 10 0");
 
-    // `rotation` is a three.js Euler using radians. `quaternion` also available.
-    console.log(this.el.object3D.rotation);
+// document.getElementById("aScene").appendChild(newLight);
 
-    // `position` is a three.js Vector3.
-    console.log(this.el.object3D.position);
-  }
-});
+// <a-entity
+// light="
+// type: spot;
+// color: white;
+// intensity: 1;
+// castShadow: true;
+// target: #image2;
+// penumbra: 0.1;"
+// position="0 1 2"
+// >
+// </a-entity>
 
