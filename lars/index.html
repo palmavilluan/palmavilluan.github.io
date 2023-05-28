@@ -14,7 +14,8 @@
       <a-camera
       position="0 1.6 0"
       twoway-motion="speed: 20"
-      treshold="-5" >
+      treshold="-5"
+      nonMobileLoad="true">
         <a-entity  
         id="text"
         position="0 0.05 -.1"
@@ -24,6 +25,16 @@
         opacity: .3;
         width: .08;
         "></a-entity>
+        <a-entity camera look-controls>
+            <a-entity cursor="fuse: true; fuseTimeout: 500;"
+                      position="0 0 -1"
+                      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                      material="color: black; opacity: .3; shader: flat">
+            </a-entity>
+          </a-entity>
+          
+          <a-entity id="box" cursor-listener geometry="primitive: box" material="color: blue"></a-entity>
+          
     </a-camera>
     </a-scene>
   </body>
