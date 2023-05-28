@@ -1,6 +1,6 @@
 path = "img/";
 i = 1;
-max = 2;
+max = 6;
 imageWidth = 5;
 gapWidth = 0.5;
 
