@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>  
+<head>
+  <meta charset="utf-8">
+  <title>A-Frame Black Room</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-area-light-component/dist/aframe-area-light-component.min.js"></script>
+</head>
+
+<body>
+  <!--create a-scene element-->
+  <a-scene id="aScene">
+
+
+  <!--create a-scene element-->
+  <a-scene id="aScene">
+
+    <!-- make a sky -->
+    <a-sky color="#004000"></a-sky>
+
+    <!-- Camera -->
+    <a-camera
+    position="0 1.6 1"
+    cursor-visible="true"
+    cursor-scale="20"
+    cursor-color="red"
+    cursor-opacity="0"
+    ></a-camera>
+
+    <!-- Floor -->
+    <a-plane 
+    color="white" 
+    rotation="-90 0 0" 
+    scale="100 100 1"
+    position="0 0 0"
+    repeat="20 20 0"
+    shadow="receive: true;"
+    roughness="2">
+    </a-plane>
+
+
+      
+    
+
+   
+
+    
+  
+  </a-scene>
+</body>
+
+
+
+<!-- import javascript -->
+<script src="aframe.js"></script>
+
+</html>

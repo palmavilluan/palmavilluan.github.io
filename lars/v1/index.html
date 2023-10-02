@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>  
+<head>
+  <meta charset="utf-8">
+  <title>A-Frame Black Room</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-area-light-component/dist/aframe-area-light-component.min.js"></script>
+</head>
+
+<body>
+  <!--create a-scene element-->
+  <a-scene id="aScene">
+   
+    <!-- sky -->
+    <!-- <a-sky src="img/sky_texture.png"></a-sky> -->
+    <!-- <a-sky src="img/0004.png"></a-sky> -->
+    <a-sky color="#000"></a-sky>
+
+
+    <!-- Camera -->
+    <a-camera
+    position="0 1.6 0"
+    cursor-visible="true"
+    cursor-scale="20"
+    cursor-color="red"
+    cursor-opacity="0"
+    ></a-camera>
+
+    <!-- Flächen -->
+      <!-- Floor -->
+      <a-plane 
+      color="white" 
+      rotation="-90 0 0" 
+      scale="100 100 1"
+      position="0 0 0"
+      repeat="20 20 0"
+      shadow="receive: true;"
+      roughness="2">
+      </a-plane>
+      
+      <!-- roof -->
+      <a-plane 
+      color="white" 
+      rotation="-90 0 0" 
+      scale="100 100 -1"
+      position="0 6 0"
+      repeat="20 20 0"
+      shadow="receive: true;">
+      </a-plane>
+    <!-- /Flächen -->
+    
+
+    <!-- Wände -->
+
+      <!-- Wall behind images -->
+      <a-box 
+      position="0 3 -10"
+      width="40"
+      height="6"
+      depth="0.1"
+      color="white"
+      shadow="receive: true;">
+      </a-box>
+
+      <!-- Wall left -->
+      <a-box 
+      position="-20 3 2.5"
+      rotation="0 90 0"
+      width="25.2"
+      height="6"
+      depth="0.1"
+      color="grey"
+      shadow="receive: true;">
+      </a-box>
+
+      <!-- Wall right -->
+      <a-plane 
+      position="20 3 2.5"
+      rotation="0 -90 0"
+      width="25.2"
+      height="7.5"
+      depth="0.1"
+      color="white"
+      shadow="receive: true;">
+      </a-plane>
+      <!-- Wall behind -->
+      <a-box 
+      position="0 3.75 15"
+      rotation="0 180 0"
+      width="40"
+      height="7.5"
+      depth="0.1"
+      color="white"
+      shadow="receive: true;">
+      </a-box>
+    <!-- /Wände -->
+
+    
+    <!-- Lichter -->
+      <!-- point light -->
+        <a-entity 
+        id="roomLight"
+        light="
+        type: point;
+        intensity: 1;"
+        position="0 3 2.5" >
+        </a-entity>
+      <!-- /point light -->
+
+      <a-entity
+      id="bodenlicht" 
+      area-light="
+      intensity: 1;
+      width: 40; 
+      height: 1; 
+      color: white; 
+      penumbra: 1;" 
+      position="-20 0.001 -9.5" 
+      rotation="90 0 0"
+      ></a-entity>
+      <a-entity
+      id="bodenlicht2" 
+      area-light="
+      intensity: 1;
+      width: 40; 
+      height: 1; 
+      color: white; 
+      penumbra: 1;" 
+      position="-20 0.5 -9.99" 
+      rotation="-180 0 0"
+      ></a-entity>
+
+      <a-entity
+      id="deckenlicht" 
+      area-light="
+      intensity: 1;
+      width: 40; 
+      height: 1; 
+      color: white; 
+      penumbra: 1;" 
+      position="-20 5.999 -9.5" 
+      rotation="-90 0 0"
+      ></a-entity>
+      <a-entity
+      id="deckenlicht2" 
+      area-light="
+      intensity: 1;
+      width: 40; 
+      height: 1; 
+      color: white; 
+      penumbra: 1;" 
+      position="-20 5.5 -9.99" 
+      rotation="-180 0 0"
+      ></a-entity>
+
+
+      <!-- ambient light -->
+      <!-- <a-entity 
+      light="
+      type: ambient;
+      intensity: .4" >
+      </a-entity> -->
+
+      <!-- <a-entity
+      light="
+      type: spot;
+      color: white;
+      intensity: 1;
+      castShadow: true;
+      penumbra: 0.1;
+      angle: 20;"
+      position="0 0 0"
+      rotation="0 90 0"
+      ></a-entity> -->
+    <!-- /Lichter -->
+
+
+   
+
+    
+  
+  </a-scene>
+</body>
+
+
+
+<!-- import javascript -->
+<script src="aframe.js"></script>
+
+</html>
