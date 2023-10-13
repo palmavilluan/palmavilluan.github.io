@@ -13,11 +13,9 @@ background-color: grey;
 
 }
 
-#overlayWrapper {
-   
-    
-    background-color: grey;
-    
-    }
-    
+#overlayContainer {
 
+    margin: 1vw;
+
+    background-color: lightgrey;
+}
