@@ -5,13 +5,13 @@ const roomColor = "white";
 let newImg;
 let cornerPosition;
 let rotationY;
-const anzahlBilderProWand = 1;
+const anzahlBilderProWand = 2;
 const numberOfElements = anzahlBilderProWand * 4;
-const imageWidth = 5;
-const imageToFloor = 0.5;
+const imageWidth = 1.5;
+const imageToFloor = 0.9;
 const gapWidth = 2.5;
 const segmentSize = imageWidth + gapWidth;
-const segmentHeight = 8;
+const segmentHeight = 4;
 const light = true;
 
 const roomSize = numberOfElements/4 * segmentSize; // Adjust this value to set the size of the square room
@@ -30,23 +30,23 @@ for (let i = 1; i <= numberOfElements; i++) {
   .then(response => response.json())
 
   .then(data => {                                                                   //rotation erstellen
-    if (i <= numberOfElements / 4) {
-      positionX = (((anzahlBilderProWand+1) * segmentSize)/2) - (i * segmentSize);
+    if (i <= numberOfElements / 4) {                                                //Bilder auf der ersten Wand die vor einem ist wenn man spawnt
+      positionX = (((anzahlBilderProWand+1) * segmentSize)/2) - (i * segmentSize) ;
       positionZ = -halfRoomSize-segmentSize/2;
       rotationY = 0;
-    // } else if (i <= numberOfElements / 2) {
-    //   positionX = -halfRoomSize - segmentSize/2;
-    //   positionZ = (i * segmentSize) - ((anzahlBilderProWand + 1) * segmentSize);
-    //   rotationY = 90;
-    // } else if (i <= (3 * numberOfElements) / 4) {
-    //   positionX = - halfRoomSize + ((i-1) - numberOfElements / 2) * segmentSize;
-    //   positionZ = halfRoomSize+segmentSize;
-    //   rotationY = 180;
-    // } else if (i <= numberOfElements){
-    //   positionX = halfRoomSize;
-    //   positionZ = halfRoomSize - ((i-1) - (3 * numberOfElements) / 4) * segmentSize;
-    //   rotationY = -90;
-    // }
+    } else if (i <= numberOfElements / 2) {                                         //Bilder auf der linken Wand
+      positionX = -halfRoomSize - segmentSize/2;
+      positionZ = (i * segmentSize) - ((anzahlBilderProWand+1) * segmentSize) - (halfRoomSize-segmentSize/2);
+      rotationY = 90;
+    } else if (i <= (3 * numberOfElements) / 4) {                                   //Bilder auf der hinteren Wand
+      positionX = (segmentSize/2)-halfRoomSize + ((i-1) - numberOfElements / 2) * segmentSize;
+      positionZ = halfRoomSize+segmentSize/2;
+      rotationY = 180;
+    } else if (i <= numberOfElements){                                              //Bilder auf der rechten Wand
+      positionX = halfRoomSize+segmentSize/2;
+      positionZ = (halfRoomSize-segmentSize/2) - ((i-1) - (3 * numberOfElements) / 4) * segmentSize;
+      rotationY = -90;
+    }
     return {data, positionX, positionZ, rotationY};
   })
 
@@ -157,9 +157,41 @@ for (let i = 1; i <= numberOfElements; i++) {
 
   .catch(error => {
     // Handle any errors that occur during the fetch
-    console.error('Something went wrong with fetching the data', error);
+    console.error('Something went wrong somewhere', error);
   });
 };
+
+//create for loop
+for(let i=1; i <= 4; i++){
+  if (i == 1) {
+    cornerPosition = `${halfRoomSize} ${segmentHeight/2} -${halfRoomSize}`;
+    rotationY = 0;
+  } else if (i == 2) {
+    cornerPosition = `-${halfRoomSize+segmentSize} ${segmentHeight/2} -${halfRoomSize}`;
+    rotationY = 90;
+  } else if (i == 3) {
+    cornerPosition = `-${halfRoomSize+segmentSize} ${segmentHeight/2} ${halfRoomSize+segmentSize}`;
+    rotationY = 180;
+  } else if (i == 4){
+    cornerPosition = `${halfRoomSize} ${segmentHeight/2} ${halfRoomSize+segmentSize}`;
+    rotationY = -90;
+  }
+
+  cornerEntity = document.createElement("a-entity");
+  cornerEntity.setAttribute("id", "corner_" + i);
+  cornerEntity.setAttribute("position", cornerPosition);
+  cornerEntity.setAttribute("rotation", `0 ${rotationY} 0`);
+  // cornerEntity.setAttribute("geometry",`
+  //                     primitive: box;
+  //                     width: ${segmentSize};
+  //                     height: ${segmentHeight};
+  //                     depth: ${segmentSize};
+  // `);
+  // cornerEntity.setAttribute("material", "wireframe: true; color: white; wireframeLinewidth: 1;"); // Wireframe
+  document.getElementById("aScene").appendChild(cornerEntity);
+}
+
+
 
 while(light == true){                                                           //Licht erstellen        
   newLight = document.createElement("a-light");
@@ -187,6 +219,27 @@ middleFloor.setAttribute("width", roomSize);
 middleFloor.setAttribute("height", roomSize);
 middleFloor.setAttribute("rotation", "-90 0 0");
 document.getElementById("aScene").appendChild(middleFloor);
+//create middle roof
+middleRoof = document.createElement("a-plane");
+middleRoof.setAttribute("id", "middleRoof");
+middleRoof.setAttribute("position", `0 ${segmentHeight} 0`);
+middleRoof.setAttribute("color", roomColor);
+middleRoof.setAttribute("width", roomSize);
+middleRoof.setAttribute("height", roomSize);
+middleRoof.setAttribute("rotation", "90 0 0");
+document.getElementById("aScene").appendChild(middleRoof);
+
+//create camera rig
+Rig = document.createElement("a-entity");
+Rig.setAttribute("id", "Rig");
+Rig.setAttribute("position", `0 0 0`);
+Rig.setAttribute("rotation", `0 -90 0`);
+document.getElementById("aScene").appendChild(Rig);
+  //create camera in rig
+  pawn = document.createElement("a-camera");
+  pawn.setAttribute("id", "pawn");
+  pawn.setAttribute("position", `0 1.6 0`);
+  document.getElementById("Rig").appendChild(pawn);
 
 // for(let i=1; i <= 4; i++){
 //   if (i == 1) {
