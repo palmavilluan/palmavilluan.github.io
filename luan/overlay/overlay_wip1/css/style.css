@@ -1,0 +1,22 @@
+*{
+margin: 0;
+}
+
+#overlayWrapper {
+
+
+
+width: 100vw;
+height: 100vh;
+
+background-color: grey;
+
+}
+
+#overlayContainer {
+
+    margin: 1vw;
+
+    background-color: lightgrey;
+}
+
