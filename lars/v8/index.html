@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <a-scene id="aScene" shadow="type: pcfsoft">
+  <a-scene id="aScene" shadow="type: pcfsoft" cursor="rayOrigin: mouse">
     <a-sky color="#000"></a-sky>
 
 
@@ -18,8 +18,8 @@
 
 
     <a-entity id="Rig">
-      <a-camera id="pawn">
-        <a-cursor></a-cursor>
+      <a-camera id="pawn" check-coordinates>
+        <a-cursor far="0.0001" visible="false"></a-cursor>
       </a-camera>
     </a-entity>
 

@@ -1,13 +1,13 @@
 const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/random.php'
 
 const roomColor = "white";
-const warpPointColor = "grey";
-const warpPointColorActive = "#61b0b1";
+const warpPointColor = "#61b0b1";
+const warpPointColorActive = "#abdcdd";
 
 let newImg;
 let cornerPosition;
 let rotationY;
-const anzahlBilderProWand = 8;
+const anzahlBilderProWand = 10;
 const numberOfElements = anzahlBilderProWand * 4;
 const imageWidth = 1.5;
 const imageToFloor = 0.9;
@@ -82,13 +82,10 @@ for (let i = 1; i <= numberOfElements; i++) {
 
 
   .then(data => {                                                                   //Bilder erstellen
-
     newImg = document.createElement("a-box");
+
     newImg.setAttribute("src", data.drinks[0].strDrinkThumb);
     newImg.setAttribute("id", "image" + i);
-    
-
-    // Rest of your code remains the same, just update the position attributes
     newImg.setAttribute("position", `0 -${(segmentHeight/2)-(imageWidth/2)-imageToFloor} -${(segmentSize/2)-0.1}`);
     newImg.setAttribute("rotation", `0 0 0`); // Set the rotation
     newImg.setAttribute("color", "white");
@@ -98,6 +95,7 @@ for (let i = 1; i <= numberOfElements; i++) {
     newImg.setAttribute("depth", "0.01%");
     newImg.setAttribute("shader", "flat");
     newImg.setAttribute("shadow", "cast: true; receive: false");
+    newImg.setAttribute("event-set__click", `_event: click; _target: #pawn; position: ${data.segmentPosition.x} 1.6 ${data.segmentPosition.z};`);
     document.getElementById("segment_" + i).appendChild(newImg);
     return data;
   })
@@ -146,8 +144,10 @@ for (let i = 1; i <= numberOfElements; i++) {
                           _event: mouseleave; 
                           color: ${warpPointColor};
                           visible: false`);
-    
-    warpPoint.setAttribute("event-set__click", `_event: click; _target: #pawn; position: ${data.segmentPosition.x} 1.6 ${data.segmentPosition.z};`);
+    warpPoint.setAttribute("event-set__click", `
+                          _event: click; 
+                          _target: #pawn; 
+                          position: ${data.segmentPosition.x} 1.6 ${data.segmentPosition.z};`);
     document.getElementById("Floor_" + i).appendChild(warpPoint);
     return data;
   })
@@ -173,7 +173,7 @@ for (let i = 1; i <= numberOfElements; i++) {
     return data;
   })
 
-  .then(data => {                                                                   
+  .then(data => {                                                                   //eventlistener
     newWall.setAttribute("event-set__enter", `
                           _event: mouseenter; 
                           _target: #${"warpPoint"+i}; 
@@ -194,16 +194,16 @@ for (let i = 1; i <= numberOfElements; i++) {
                           _target: #${"warpPoint"+i}; 
                           color: ${warpPointColor};
                           visible: false`);
-    newFloor.setAttribute("event-set__enter", `
-                          _event: mouseenter; 
-                          _target: #${"warpPoint"+i}; 
-                          color: ${warpPointColor};
-                          visible: true`);
-    newFloor.setAttribute("event-set__leave", `
-                          _event: mouseleave; 
-                          _target: #${"warpPoint"+i}; 
-                          color: ${warpPointColor};
-                          visible: false`);
+    // newFloor.setAttribute("event-set__enter", `
+    //                       _event: mouseenter; 
+    //                       _target: #${"warpPoint"+i}; 
+    //                       color: ${warpPointColor};
+    //                       visible: true`);
+    // newFloor.setAttribute("event-set__leave", `
+    //                       _event: mouseleave; 
+    //                       _target: #${"warpPoint"+i}; 
+    //                       color: ${warpPointColor};
+    //                       visible: false`);
 
     //update the segment element 
     newWall.setAttribute("data-raycastable", true);
@@ -366,3 +366,56 @@ for(let i=1; i <= 4; i++){
 
 
 
+console.log("Roomsize: " + roomSize);
+
+
+AFRAME.registerComponent('check-coordinates', {                                                         //collision simulation
+  tick: function () {
+    // Get the element you want to check
+    var thing = this.el;
+
+    
+    // Get the element with the ID "segment_1"
+    var segment1 = document.getElementById("segment_1");
+
+    if (segment1) {
+      // Get the x position of "segment_1"
+      var zPosition = segment1.getAttribute('position').z;
+    }
+    range = zPosition - segmentSize/2 + 0.3;
+    // Define your desired range for x and z coordinates
+    var xRangeStart = -range;
+    var zRangeStart = -range;
+    var xRangeEnd = range;
+    var zRangeEnd = range;
+
+    // Get the current position
+    var currentPosition = thing.getAttribute('position');
+    console.log(range);
+    console.log(currentPosition);
+    console.log("x: " + xRangeStart +"    "+ xRangeEnd + " \t\tz: " + zRangeStart +" - "+ zRangeEnd);
+
+    if (currentPosition.x > xRangeStart ) {
+      thing.setAttribute('position', `${currentPosition.x-0.1} 1.6 0`);
+      console.log("Over range");
+    }
+    else if (currentPosition.x < xRangeEnd ) {
+      thing.setAttribute('position', `${currentPosition.x+0.1} 1.6 0`);
+      console.log("Out of bounds");
+    }
+    if (currentPosition.z > zRangeStart ) {
+      thing.setAttribute('position', `0 1.6 ${currentPosition.z-0.1}`);
+      console.log("Over range");
+    }
+    else if (currentPosition.z < zRangeEnd ) {
+      thing.setAttribute('position', `0 1.6 ${currentPosition.z+0.1}`);
+      console.log("Out of bounds");
+    }
+    // Check if the x and z coordinates are outside the desired range
+    // if (Math.abs(currentPosition.z) > zRangeStart) {
+    //   // If outside the range, reset the position
+    //   thing.setAttribute('position', `0 1.6 ${currentPosition.z+0.1}`); // Change this to your desired reset position
+    //   console.log("Out of bounds");
+    // }
+  }
+});
