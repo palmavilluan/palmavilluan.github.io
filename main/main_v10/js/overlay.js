@@ -457,7 +457,7 @@ function event_toggleScreen_icon() {
 
         screenState = "full";
 
-        toggleScreen_icon.src = "../../00_media/04_svg/smallScreen_icon.svg";
+        toggleScreen_icon.src = "../00_media/04_svg/smallScreen_icon.svg";
 
         //virtualExpoFrame.requestFullscreen();
 
@@ -472,7 +472,7 @@ function event_toggleScreen_icon() {
 
         //document.exitFullscreen();
 
-        toggleScreen_icon.src = "../../00_media/04_svg/fullScreen_icon.svg";
+        toggleScreen_icon.src = "../00_media/04_svg/fullScreen_icon.svg";
 
         virtualExpoFrame.style.width = "80vw";
         virtualExpoFrame.style.height = "80vh";
