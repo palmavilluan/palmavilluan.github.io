@@ -1,5 +1,9 @@
 console.log("fileLoaded: script.js");
 
+//ABSCHNITT definieren globale Variablen========================================================================================================
+
+
+
 let expoName = "expoName";
 let expoYear = "expoYear";
 let orgaName = "Zentrum Paul Klee";
@@ -10,21 +14,15 @@ let virtualExpoFrame = document.querySelector("#virtualExpoFrame");
 
 let screenState = "full";
 
-let overlayState = "expoPreview";
+let currentView = "expoPreview";
 
-//overlayState = "expoView";
+//currentView = "expoView";
 
-let expoPreviewIconArray = [
-    "profilBild_icon",
-    "expoTitle_text",
-    "orgaName_text",
-    "linkKopieren_icon",
-    "virtualExpo_icon",
-    "virtualExpo_logo"
-];
+
+
+//BEREICH Icons------------------------------------------------------------------------------------------------------------------------------
 
 let iconArray = document.querySelectorAll(".overlayIcon");
-
 
 let profilBild_icon = document.querySelector("#profilBild_icon");
 
@@ -44,6 +42,16 @@ let guide_icon = document.querySelector("#guide_icon");
 let settings_icon = document.querySelector("#settings_icon");
 let toggleScreen_icon = document.querySelector("#toggleScreen_icon");
 
+let expoPreviewIconArray = [
+    "profilBild_icon",
+    "expoTitle_text",
+    "orgaName_text",
+    "linkKopieren_icon",
+    "virtualExpo_icon",
+    "virtualExpo_logo"
+];
+
+//BEREICH Info------------------------------------------------------------------------------------------------------------------------------    
 
 let overlayHeaderInfo = document.querySelector("#overlayHeaderInfo");
 let overlayMainInfo = document.querySelector("#overlayMainInfo");
@@ -53,6 +61,8 @@ let overlayInfoArray = document.querySelectorAll(".overlayInfo");
 
 
 
+
+//ABSCHNITT aufrufen Funktionen========================================================================================================
 
 setOverlay();
 
@@ -70,6 +80,14 @@ event_toggleScreen_icon();
 //clearBackgroundColors();
 
 
+
+
+//ABSCHNITT definieren Funktionen========================================================================================================   
+
+
+//BEREICH vorbereitende Funktionen------------------------------------------------------------------------------------------------------------------------------
+
+//FUNKTION setOverlay()
 function setOverlay(){
 
 
@@ -89,7 +107,9 @@ expoDate_text.innerHTML =    expoYear;
 
 
 
-if (overlayState == "expoPreview") {
+if (currentView == "expoPreview") {
+
+    console.log("currentView: expoPreview");
 
     for (let i = 0; i < expoPreviewIconArray.length; i++) {
 
@@ -101,9 +121,9 @@ if (overlayState == "expoPreview") {
 }
 
 
-if (overlayState == "expoView"){
+if (currentView == "expoView"){
 
-    console.log("expoView");
+    console.log("currentView: expoView");
 
     let expoViewIconArray = iconArray;
 
@@ -118,9 +138,10 @@ if (overlayState == "expoView"){
 
 }
 
-}
+}//ENDE FUNKTION setOverlay()
 
 
+//FUNKTION clearBackgroundColors()
 function clearBackgroundColors() {
     console.log("functionExecuted: clearBackgroundColors()");
 
@@ -146,8 +167,125 @@ function clearBackgroundColors() {
 
 }
 
+}//ENDE FUNKTION clearBackgroundColors()
+
+
+
+//BEREICH allgemeine Funktionen------------------------------------------------------------------------------------------------------------------------------
+
+//FUNKTION mouseOverOpacity()
+function mouseOverOpacity(targetIcon){
+
+    targetIcon.style.opacity = "0.5";
+
+}//ENDE FUNKTION mouseOverOpacity()
+
+//FUNKTION mouseOutOpacity()
+function mouseOutOpacity(targetIcon){
+
+    targetIcon.style.opacity = "1";
+
+
+}//ENDE FUNKTION mouseOutOpacity()
+
+//FUNKTION showInfo()
+function showInfo(targetIcon, infoText, targetInfo ){
+
+    targetInfo.innerHTML = infoText;
+
+    targetInfo.style.display = "block";
+
+    
+
+    //calculate left posittion of targetIcon
+
+    let targetIconLeft = targetIcon.getBoundingClientRect().left;
+    let targetIconWidth = targetIcon.getBoundingClientRect().width;
+
+
+    let targetInfoWidth = targetInfo.getBoundingClientRect().width;
+
+    let targetInfoLeft = targetIconLeft + targetIconWidth/2 - targetInfoWidth/2;
+    
+    
+
+    //make sure the targetInfo is inside the corresponding oberlayInfoWrapper
+
+    let targetInfoWrapper = targetInfo.parentNode;
+
+    //console.log(targetInfoWrapper);
+
+    let targetInfoWrapperLeft = targetInfoWrapper.getBoundingClientRect().left;
+    let targetInfoWrapperRight = targetInfoWrapper.getBoundingClientRect().right;
+
+    if (targetInfoLeft < targetInfoWrapperLeft){
+
+        targetInfoLeft = targetInfoWrapperLeft;
+
+    } else if (targetInfoLeft + targetInfoWidth > targetInfoWrapperRight){
+
+        targetInfoLeft = targetInfoWrapperRight - targetInfoWidth;
+
+
+    }
+
+    targetInfo.style.left = targetInfoLeft + "px";
+
+
+
+    if (targetInfoWrapper.id != "overlayFooterInfoWrapper"){
+
+
+    let targetIconBottom = targetIcon.getBoundingClientRect().bottom;
+
+    //console.log(targetIconBottom);
+
+    let targetInfoTop = targetIconBottom + 5  ;
+
+    //console.log(targetInfoTop);
+
+    targetInfo.style.top = targetInfoTop + "px";
+
+
+} else {
+
+    let targetIconTop = targetIcon.getBoundingClientRect().top;
+    
+    let targetInfoHeight = targetInfo.getBoundingClientRect().height;
+
+    let targetInfoTop = targetIconTop - targetInfoHeight -5;
+
+    targetInfo.style.top = targetInfoTop + "px";
+
+
+   
+   
+    
 }
 
+
+ 
+
+
+
+
+
+   
+
+}//ENDE FUNKTION showInfo()
+
+//FUNKTION hideInfo()
+function hideInfo(targetInfo){
+
+    targetInfo.style.display = "none";
+
+}//ENDE FUNKTION hideInfo()
+
+
+
+//BEREICH event Funktionen------------------------------------------------------------------------------------------------------------------------------
+
+//FUNKTION event_profilBild_icon()
 function event_profilBild_icon() {
 
     profilBild_icon.addEventListener("click", function () {
@@ -176,8 +314,10 @@ function event_profilBild_icon() {
 
     });
 
-}
+}//ENDE FUNKTION event_profilBild_icon()
 
+
+//FUNKTION event_orgaName_text()
 function event_orgaName_text() {
 
     orgaName_text.addEventListener("click", function () {
@@ -206,9 +346,9 @@ function event_orgaName_text() {
 
         });
 
-}
+}//ENDE FUNKTION event_orgaName_text()
 
-
+//FUNKTION event_linkKopieren_icon()
 function event_linkKopieren_icon() {
 
     linkKopieren_icon.addEventListener("mouseover", function () {
@@ -231,17 +371,15 @@ function event_linkKopieren_icon() {
     });
 
 
-}
+}//ENDE FUNKTION event_linkKopieren_icon()
 
-
-
+//FUNKTION event_virtualExpo_icon()
 function event_virtualExpo_icon() {
-
 
 
 virtualExpo_icon.addEventListener("click", function () {
 
-    overlayState = "expoView";
+    currentView = "expoView";
 
     setOverlay();
 
@@ -268,13 +406,14 @@ virtualExpo_icon.addEventListener("mouseout", function () {
 
 });
 
-}
+}//ENDE FUNKTION event_virtualExpo_icon()
 
+//FUNKTION event_virtualExpo_logo()
 function event_virtualExpo_logo() {
 
     virtualExpo_logo.addEventListener("click", function () {
 
-        overlayState = "expoPreview";
+        currentView = "expoPreview";
 
         setOverlay();
 
@@ -304,13 +443,14 @@ function event_virtualExpo_logo() {
     });
 
 
-}
+}//ENDE FUNKTION event_virtualExpo_logo()
 
+//FUNKTION event_exit_icon()
 function event_exit_icon() {
 
     exit_icon.addEventListener("click", function () {
 
-        overlayState = "expoPreview";
+        currentView = "expoPreview";
 
         setOverlay();
 
@@ -340,8 +480,9 @@ function event_exit_icon() {
 
 
 
-}
+}//ENDE FUNKTION event_exit_icon()
 
+//FUNKTION event_home_icon()
 function event_home_icon() {
 
     //console.log("functionExecuted: event_home_icon()")
@@ -377,9 +518,9 @@ function event_home_icon() {
 
 
 
-}
+}//ENDE FUNKTION event_home_icon()
 
-
+//FUNKTION event_guide_icon()
 function event_guide_icon() {
 
     guide_icon.addEventListener("click", function () {
@@ -413,9 +554,9 @@ function event_guide_icon() {
 
 
 
-}
+}//ENDE FUNKTION event_guide_icon()
 
-
+//FUNKTION event_settings_icon()
 function event_settings_icon() {
 
     settings_icon.addEventListener("click", function () {
@@ -447,18 +588,18 @@ function event_settings_icon() {
 
 
 
-}
+}//ENDE FUNKTION event_settings_icon()
 
-
+//FUNKTION event_toggleScreen_icon()
 function event_toggleScreen_icon() {
 
     toggleScreen_icon.addEventListener("click", function () {
 
-        console.log("toggleScreen_icon clicked");
+        //console.log("iconClicked: toggleScreen_icon");
 
        if (screenState == "small"){
 
-        console.log("screenstate: small")
+        //console.log("currentScreenstate: small")
 
         screenState = "full";
 
@@ -471,7 +612,7 @@ function event_toggleScreen_icon() {
 
        } else {
 
-        console.log("screenstate: full")
+        //console.log("currentScreenstate: full")
 
         screenState = "small";
 
@@ -532,122 +673,17 @@ function event_toggleScreen_icon() {
 
 
 
-}
+}//ENDE FUNKTION event_toggleScreen_icon()
 
 
-function mouseOverOpacity(targetIcon){
 
-    targetIcon.style.opacity = "0.5";
 
-}
 
-function mouseOutOpacity(targetIcon){
 
-    targetIcon.style.opacity = "1";
 
 
-}
 
 
-
-
-
-
-
-
-
-
-
-function showInfo(targetIcon, infoText, targetInfo ){
-
-    targetInfo.innerHTML = infoText;
-
-    targetInfo.style.display = "block";
-
-    
-
-    //calculate left posittion of targetIcon
-
-    let targetIconLeft = targetIcon.getBoundingClientRect().left;
-    let targetIconWidth = targetIcon.getBoundingClientRect().width;
-
-
-    let targetInfoWidth = targetInfo.getBoundingClientRect().width;
-
-    let targetInfoLeft = targetIconLeft + targetIconWidth/2 - targetInfoWidth/2;
-    
-    
-
-    //make sure the targetInfo is inside the corresponding oberlayInfoWrapper
-
-    let targetInfoWrapper = targetInfo.parentNode;
-
-    console.log(targetInfoWrapper);
-
-    let targetInfoWrapperLeft = targetInfoWrapper.getBoundingClientRect().left;
-    let targetInfoWrapperRight = targetInfoWrapper.getBoundingClientRect().right;
-
-    if (targetInfoLeft < targetInfoWrapperLeft){
-
-        targetInfoLeft = targetInfoWrapperLeft;
-
-    } else if (targetInfoLeft + targetInfoWidth > targetInfoWrapperRight){
-
-        targetInfoLeft = targetInfoWrapperRight - targetInfoWidth;
-
-
-    }
-
-    targetInfo.style.left = targetInfoLeft + "px";
-
-
-
-    if (targetInfoWrapper.id != "overlayFooterInfoWrapper"){
-
-
-    let targetIconBottom = targetIcon.getBoundingClientRect().bottom;
-
-    console.log(targetIconBottom);
-
-    let targetInfoTop = targetIconBottom + 5  ;
-
-    console.log(targetInfoTop);
-
-    targetInfo.style.top = targetInfoTop + "px";
-
-
-} else {
-
-    let targetIconTop = targetIcon.getBoundingClientRect().top;
-    
-    let targetInfoHeight = targetInfo.getBoundingClientRect().height;
-
-    let targetInfoTop = targetIconTop - targetInfoHeight -5;
-
-    targetInfo.style.top = targetInfoTop + "px";
-
-
-   
-   
-    
-}
-
-
- 
-
-
-
-
-
-   
-
-}
-
-function hideInfo(targetInfo){
-
-    targetInfo.style.display = "none";
-
-}
 
 
 
