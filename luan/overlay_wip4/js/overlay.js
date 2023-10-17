@@ -344,6 +344,8 @@ function event_exit_icon() {
 
 function event_home_icon() {
 
+    //console.log("functionExecuted: event_home_icon()")
+
     home_icon.addEventListener("click", function () {
 
     });
@@ -366,7 +368,10 @@ function event_home_icon() {
 
         hideInfo(overlayFooterInfo);
 
-        mouseOutOpacity
+
+        mouseOutOpacity(home_icon);
+
+
 
     });
 
@@ -457,7 +462,7 @@ function event_toggleScreen_icon() {
 
         screenState = "full";
 
-        toggleScreen_icon.src = "../../00_media/04_svg/smallScreen_icon.svg";
+        toggleScreen_icon.src = "../00_media/04_svg/smallScreen_icon.svg";
 
         //virtualExpoFrame.requestFullscreen();
 
@@ -472,7 +477,7 @@ function event_toggleScreen_icon() {
 
         //document.exitFullscreen();
 
-        toggleScreen_icon.src = "../../00_media/04_svg/fullScreen_icon.svg";
+        toggleScreen_icon.src = "../00_media/04_svg/fullScreen_icon.svg";
 
         virtualExpoFrame.style.width = "80vw";
         virtualExpoFrame.style.height = "80vh";
