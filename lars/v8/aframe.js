@@ -7,7 +7,7 @@ const warpPointColorActive = "#abdcdd";
 let newImg;
 let cornerPosition;
 let rotationY;
-const anzahlBilderProWand = 10;
+const anzahlBilderProWand = 3;
 const numberOfElements = anzahlBilderProWand * 4;
 const imageWidth = 1.5;
 const imageToFloor = 0.9;
