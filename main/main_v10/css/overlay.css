@@ -53,18 +53,25 @@ a{
     padding: 0.1vw;
     box-sizing: border-box;
 
-    background-color: rgb(29, 29, 29);
+
+   
+
+    /* background-color: rgb(29, 29, 29); */
   }
 
 
   
   #overlayContainer {
+
+    z-index: 2;
+    position: absolute;
+
     width: calc(100% - 0.1vw);
     height: calc(100% - 0.1vw);
    
     padding: 0.1vw;
 
-    background-color: rgb(77, 77, 77);
+   /*  background-color: rgb(77, 77, 77); */
 
 
 
@@ -225,3 +232,7 @@ a{
 
 }
 
+
+#expoWrapper{
+    position: relative;
+}

@@ -400,7 +400,7 @@ virtualExpo_icon.addEventListener("mouseover", function () {
 
 virtualExpo_icon.addEventListener("mouseout", function () {
 
-    hideInfo(overlayMainInfo);
+    //hideInfo(overlayMainInfo);
 
     mouseOutOpacity(virtualExpo_icon);
 
