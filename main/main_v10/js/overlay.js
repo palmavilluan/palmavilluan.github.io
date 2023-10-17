@@ -10,14 +10,20 @@ let orgaName = "Zentrum Paul Klee";
 let orgaURL = "https://www.artikulierung.ch/rasterizeProject/index.html";
 
 
-let virtualExpoFrame = document.querySelector("#virtualExpoFrame");
-
 let screenState = "full";
 
 let currentView = "expoPreview";
 
 //currentView = "expoView";
 
+//BEREICH Divs------------------------------------------------------------------------------------------------------------------------------
+
+let virtualExpoFrame = document.querySelector("#virtualExpoFrame");
+let overlaywrapper = document.querySelector("#overlaywrapper");
+let overlayContainer = document.querySelector("#overlayContainer");
+let overlayHeader = document.querySelector("#overlayHeader");
+let overlayMain = document.querySelector("#overlayMain");
+let overlayFooter = document.querySelector("#overlayFooter");
 
 
 //BEREICH Icons------------------------------------------------------------------------------------------------------------------------------
@@ -118,6 +124,8 @@ if (currentView == "expoPreview") {
         expoPreviewIcon.style.display = "flex";
     }
 
+    setPointerEvents();
+
 }
 
 
@@ -134,11 +142,89 @@ if (currentView == "expoView"){
 
     virtualExpo_icon.style.display = "none";
 
+    setPointerEvents();
+
     
 
 }
 
 }//ENDE FUNKTION setOverlay()
+
+
+//FUNKTION setPointerEvents()
+function setPointerEvents(){
+
+    //console.log("functionExecuted: setPointerEvents()");
+
+    if (currentView == "expoView"){
+
+    disablePointerEvents(overlayWrapper);
+    disablePointerEvents(overlayContainer);
+    disablePointerEvents(overlayHeader);
+    disablePointerEvents(overlayMain);
+    disablePointerEvents(overlayFooter);
+
+
+    for (let i = 0; i < iconArray.length; i++) {
+
+        console.log(iconArray[i]);
+
+        //set pointerEvent to default
+
+        enablePointerEvents(iconArray[i]);
+        
+
+
+
+
+    }
+
+    enablePointerEvents(orgaName_text)
+
+
+} else if (currentView == "expoPreview"){
+
+    enablePointerEvents(overlayWrapper);
+    enablePointerEvents(overlayContainer);
+    enablePointerEvents(overlayHeader);
+    enablePointerEvents(overlayMain);
+    enablePointerEvents(overlayFooter);
+
+}
+
+
+
+
+}//ENDE FUNKTION setPointerEvents()
+
+
+function enablePointerEvents(target){
+
+    //console.log("functionExecuted: enablePointerEvents()");
+
+    //console.log("targetID: " + targetID);
+
+    target.style.pointerEvents = "auto";
+
+}
+
+//FUNKTION disablePointerEvents()
+function disablePointerEvents(target){
+
+    //console.log("functionExecuted: disablePointerEvents()");
+
+    console.log("targetID: " + target);
+
+    target.style.pointerEvents = "none";
+
+}//ENDE FUNKTION disablePointerEvents()
+
+
+
+
+
+
+
 
 
 //FUNKTION clearBackgroundColors()
@@ -400,7 +486,7 @@ virtualExpo_icon.addEventListener("mouseover", function () {
 
 virtualExpo_icon.addEventListener("mouseout", function () {
 
-    //hideInfo(overlayMainInfo);
+    hideInfo(overlayMainInfo);
 
     mouseOutOpacity(virtualExpo_icon);
 
@@ -595,11 +681,11 @@ function event_toggleScreen_icon() {
 
     toggleScreen_icon.addEventListener("click", function () {
 
-        //console.log("iconClicked: toggleScreen_icon");
+        console.log("iconClicked: toggleScreen_icon");
 
        if (screenState == "small"){
 
-        //console.log("currentScreenstate: small")
+        console.log("currentScreenstate: small")
 
         screenState = "full";
 
@@ -612,7 +698,7 @@ function event_toggleScreen_icon() {
 
        } else {
 
-        //console.log("currentScreenstate: full")
+        console.log("currentScreenstate: full")
 
         screenState = "small";
 
