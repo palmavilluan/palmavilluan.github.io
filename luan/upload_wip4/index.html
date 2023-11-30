@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload</title>
+
+
+
+
+</head>
+<body>
+
+<div id="authContainer">
+    <label for="inputMailUser">Mail</label>
+    <input id="inputMailUser" type="text">
+
+    <label for="inputPassUser">Passwort</label>
+    <input id="inputPassUser" type="text">
+
+    <button id="buttonLogin">Anmelden</button>
+    <button id="buttonRegister">Registrieren</button>
+
+    
+
+</div>
+
+    <p id="statusUser">statusUser</p>
+    <button id="buttonLogout">Logout</button> <br><br>
+
+
+    <!-- <input type="file" id="inputArtworkUpload" accept="jpeg, .jpg, .png, .pdf" /> -->
+    <input type="file" id="inputArtworkUpload"  multiple webkitdirectory directory/>
+        <button id="buttonArtworkUpload">Artwork Hochladen</button>
+
+      
+
+
+
+    <!-- ABSCHNITT script einbindung-->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"> </script>
+   
+
+    <script type="module" src="js/setup_supabase.js"></script>
+    <script type="module"  src="js/auth_supabase.js"></script>
+    <script type="module"  src="js/upload_supabase.js"></script>
+
+
+    <!--ENDE ABSCHNITT script einbindung-->
+
+    
+</body>
+</html>

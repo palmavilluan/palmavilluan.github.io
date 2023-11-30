@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <link rel="stylesheet" href="css/upload.css">
+
+
+
+
+</head>
+<body>
+
+<div id="authWrapper">
+
+    <div id="inputAuthContainer">
+
+    <label for="inputMailUser">Mail</label>
+    <input id="inputMailUser" type="text">
+    <br>
+
+    <label for="inputPassUser">Passwort</label>
+    <input id="inputPassUser" type="text">
+
+    </div>
+
+    <br>
+
+    <p id="infoUser">Fülle das Formular aus </p>
+
+    <br>
+    
+    <button id="buttonRegister">Registrieren</button>
+    <button id="buttonLogin" style="display: none;">Anmelden</button>
+
+
+   <!--  <button id="buttonLogout">Abmelden</button> -->
+    <br>
+
+    <p id="redirectLoginRegister">Bereits registriert? <a href="login.html">Hier einloggen.</a> </p>
+
+
+
+</div>
+
+<br> <br>
+    
+    
+
+
+
+
+    <!-- ABSCHNITT script einbindung-->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"> </script>
+   
+
+    <script type="module" src="js/setup_supabase.js"></script>
+    <script type="module"  src="js/register_supabase.js"></script>
+
+
+    <!--ENDE ABSCHNITT script einbindung-->
+
+    
+</body>
+</html>

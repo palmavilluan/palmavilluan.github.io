@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload</title>
+
+    <link rel="stylesheet" href="css/upload.css">
+
+
+
+
+</head>
+<body>
+
+<div id="authWrapper">
+
+    <div id="inputAuthContainer">
+
+    <label for="inputMailUser">Mail</label>
+    <input id="inputMailUser" type="text">
+
+    <label for="inputPassUser">Passwort</label>
+    <input id="inputPassUser" type="text">
+
+    </div>
+
+    <p id="infoUser">infoUser</p>
+
+    <br>
+    
+    <button id="buttonLogin">Anmelden</button>
+
+
+    <button id="buttonLogout">Abmelden</button>
+    <br>
+
+    <p id="redirectLoginRegister">Noch kein Konto? <a href="register.html"> Hier registrieren.</a> </p>
+
+
+
+</div>
+
+<br> <br>
+    
+    
+
+    <div id="uploadWrapper">
+    <h1>createExpo</h1>
+    <p id="infoUpload">infoUpload</p>
+
+
+    <div id="inputUploadContainer" style="display: none;">
+
+    
+    <!-- <input type="file" id="inputArtworkUpload" accept="jpeg, .jpg, .png, .pdf" /> -->
+    <input type="file" id="inputArtworkUpload"  multiple webkitdirectory directory/>
+    <button id="buttonArtworkUpload">Artwork Hochladen</button>
+
+    </div>
+
+</div>
+
+
+
+    <!-- ABSCHNITT script einbindung-->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"> </script>
+   
+
+    <script type="module" src="js/setup_supabase.js"></script>
+    <script type="module"  src="js/auth_supabase.js"></script>
+    <script type="module"  src="js/upload_supabase.js"></script>
+
+
+    <!--ENDE ABSCHNITT script einbindung-->
+
+    
+</body>
+</html>
