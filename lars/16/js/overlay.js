@@ -458,6 +458,14 @@ function event_linkKopieren_icon() {
 
     });
 
+    linkKopieren_icon.addEventListener("click", function () {
+            
+            let link = window.location.href;
+    
+            navigator.clipboard.writeText(link);
+    
+        });
+
 
 }//ENDE FUNKTION event_linkKopieren_icon()
 
