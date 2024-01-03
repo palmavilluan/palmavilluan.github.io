@@ -78,7 +78,7 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   createBasicRoomLight(segmentHeight, light);
   finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomColor, light);
 
-  connectingTheOverlays(expoOrganizerData , homePositionOfCamera);
+  connectingTheOverlays(expoOrganizerData , homePositionOfCamera, expoData);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////// Calling the Js file for styling overlay ////////////////////////////////////////////
@@ -726,7 +726,7 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
 }////////////////////////////////////////////////// finish the room ende ---------------------------------------------------
 
 /////////////////////////////////////////////////// connecting the overlay /////////////////////////////////////////////////
-function connectingTheOverlays(expoOrganizerData , homePositionOfCamera) {
+function connectingTheOverlays(expoOrganizerData , homePositionOfCamera, expoData) {
   // create home button 
   const homeButton = document.getElementById('home_icon');
   const cameraEntity = document.getElementById('pawn'); // Die ID Ihrer Kamera-Entity
@@ -752,6 +752,8 @@ function connectingTheOverlays(expoOrganizerData , homePositionOfCamera) {
   if (expoOrganizerData[0].logo){
     document.getElementById('profilBild_icon').setAttribute('src', expoOrganizerData[0].logo);
   }
+
+  document.title = "vE: " + expoData[0].expoName;
   // create exit button ende
 }////////////////////////////////////////////////// connecting the overlay ende -------------------------------------------- 
 
