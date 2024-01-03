@@ -44,12 +44,10 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   }
     
 
-  console.log("bigdata: ", bigdata);
   // aufteilung der daten
   let data = bigdata.imageData;
   const expoData = bigdata.expoData;
   const expoOrganizerData = bigdata.expoOrganizerData;
-  console.log("expoData: ", expoData);
   const numberOfElements = bigdata.numberOfElements;
   // aufteilung der daten 
 
@@ -80,10 +78,8 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   createBasicRoomLight(segmentHeight, light);
   finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomColor, light);
 
-  connectingTheOverlays(expoData, homePositionOfCamera);
+  connectingTheOverlays(expoOrganizerData , homePositionOfCamera);
 
-console.log("expoData: ", expoData);
-console.log("expoOrganizerData: ", expoOrganizerData[0].orgaName);
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////// Calling the Js file for styling overlay ////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -376,7 +372,6 @@ function createImage(i, data, segmentSize, segmentHeight) {
 
 /////////////////////////////////////////////////// handle image click /////////////////////////////////////////////////////
 function handleImageClick(i, data, navigation = false) {
-  console.log("data: ", data);
   if (i == 0) {
     i = data.length;
   } else if (i == data.length + 1) {
@@ -494,7 +489,6 @@ function createWarpPoint(i, data, warpPointColor) {
       warpPoint.setAttribute("scale", "1 1 0.2");
       warpPoint.setAttribute("color", warpPointColor);
       warpPoint.setAttribute("radius", "0.5");
-      warpPoint.setAttribute("shader", "flat");
       warpPoint.setAttribute("depth", "0.01%");
       // warpPoint.setAttribute("opacity", "0.5");
       
@@ -512,7 +506,6 @@ function createWarpPoint(i, data, warpPointColor) {
 
     warpPoint.addEventListener('click', () => 
       {
-        console.log(data[i]);
         document.getElementById("pawn").setAttribute('position', `${data["segment_" + i].x} 0 ${data["segment_" + i].z}`);
       }
     );
@@ -699,7 +692,6 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
       roofLight.setAttribute("rotation", `-90 -90 0`);
     document.getElementById("corner_" + i).appendChild(roofLight);
 
-    console.log("light: ", light);
     if (light == false) {
       floorLight.setAttribute("area-light", `intensity: 1; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth*2}; color: white; `);
       roofLight.setAttribute("area-light", `intensity: 1; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth*2}; color: white; `);
@@ -734,7 +726,7 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
 }////////////////////////////////////////////////// finish the room ende ---------------------------------------------------
 
 /////////////////////////////////////////////////// connecting the overlay /////////////////////////////////////////////////
-function connectingTheOverlays(expoData, homePositionOfCamera) {
+function connectingTheOverlays(expoOrganizerData , homePositionOfCamera) {
   // create home button 
   const homeButton = document.getElementById('home_icon');
   const cameraEntity = document.getElementById('pawn'); // Die ID Ihrer Kamera-Entity
@@ -756,6 +748,10 @@ function connectingTheOverlays(expoData, homePositionOfCamera) {
     document.getElementById("pawn").setAttribute('wasd-controls', 'enabled: false');
     cameraEntity.setAttribute('position', homePositionOfCamera);
   });
+
+  if (expoOrganizerData[0].logo){
+    document.getElementById('profilBild_icon').setAttribute('src', expoOrganizerData[0].logo);
+  }
   // create exit button ende
 }////////////////////////////////////////////////// connecting the overlay ende -------------------------------------------- 
 
