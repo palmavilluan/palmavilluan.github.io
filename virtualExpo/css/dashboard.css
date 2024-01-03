@@ -109,6 +109,16 @@ button{
 
 }
 
+.optionMainNavigation{
+    text-decoration: none;
+    color: #000000;
+}
+
+.optionMainNavigation:hover{
+    color: #000000;
+    opacity: 0.5;
+}
+
 .sectionDashboard{
     width: 33%;
     height: 100%;

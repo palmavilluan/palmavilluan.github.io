@@ -66,7 +66,7 @@ let selectedArtworkID;
 
 
 
-let visitURL = "https://palmavilluan.github.io/" + "/virtualExpo" +"/?";
+let visitURL = "https://palmavilluan.github.io/" + "/virtualExpo/visit" +"/?";
 
 class Expo{
     constructor(expoName, expoStart, expoEnd, expoLink){
