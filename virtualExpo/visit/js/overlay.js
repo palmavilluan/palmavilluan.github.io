@@ -515,7 +515,7 @@ function event_virtualExpo_logo() {
 
         // make a link to root directory
 
-        window.open("../dashboard/index.html", "_self");
+        window.open("../index.html", "_self");
 
     });
 
