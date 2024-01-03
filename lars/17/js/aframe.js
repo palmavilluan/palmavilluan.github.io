@@ -48,6 +48,8 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   // aufteilung der daten
   let data = bigdata.imageData;
   const expoData = bigdata.expoData;
+  const expoOrganizerData = bigdata.expoOrganizerData;
+  console.log("expoData: ", expoData);
   const numberOfElements = bigdata.numberOfElements;
   // aufteilung der daten 
 
@@ -80,11 +82,12 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
 
   connectingTheOverlays(expoData, homePositionOfCamera);
 
-
+console.log("expoData: ", expoData);
+console.log("expoOrganizerData: ", expoOrganizerData[0].orgaName);
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////// Calling the Js file for styling overlay ////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  main(expoData[0].expoName, expoData[0].expoOrganizer, expoData[0].expoDate);
+  main(expoData[0].expoName, expoOrganizerData[0].orgaName, expoData[0].expoDate);
 });
 
 
@@ -132,12 +135,20 @@ async function getImagesFromSupabase(expoID) {
     return;
   }
 
+  let { data: expoOrganizerData, error: expoOrganizerError } = await supa
+    .from('Organisation')
+    .select('*')
+    .eq('id', expoData[0].orga_id);
+  if (expoOrganizerError) {
+    console.error('Error fetching files:', expoOrganizerError);
+    return;
+  }
 
   const dataLength = imageData.length;
   const numberOfElements = Math.max(4 * Math.ceil(dataLength / 4), dataLength);
   // console.log("numberOfElements: ", numberOfElements)
   // console.log("data", data);
-  return {imageData, numberOfElements, expoData};
+  return {imageData, numberOfElements, expoData, expoOrganizerData};
 }////////////////////////////////////////////////// get all images from supabase ende -------------------------------------
 
 /////////////////////////////////////////////////// get expoHash from URL //////////////////////////////////////////////////
@@ -316,18 +327,20 @@ function createImage(i, data, segmentSize, segmentHeight) {
     let nextButton = document.createElement("img");
       nextButton.setAttribute("id", "nextImage_"+i);
       nextButton.setAttribute("class", "arrow");
+      nextButton.setAttribute("title", "To the next image");
       nextButton.setAttribute("style", "display: none;");
       nextButton.setAttribute("style", "pointer-events: auto;");
-      nextButton.setAttribute("src", "00_media/04_svg/navigation_right_2.svg");
+      nextButton.setAttribute("src", "00_media/04_svg/right_icon.svg");
     document.getElementById("overlayMain").appendChild(nextButton);
 
     let lastButton = document.createElement("img");
       lastButton.setAttribute("id", "lastImage_"+i);
       lastButton.setAttribute("class", "arrow left");
+      lastButton.setAttribute("title", "To the next image");
       lastButton.setAttribute("style", "display: none;");
       lastButton.setAttribute("style", "right: auto; left: 0;");
       lastButton.setAttribute("style", "pointer-events: auto;");
-      lastButton.setAttribute("src", "00_media/04_svg/navigation_right_2.svg");
+      lastButton.setAttribute("src", "00_media/04_svg/right_icon.svg");
     document.getElementById("overlayMain").appendChild(lastButton);
 
     lastButton.addEventListener('click', () => handleImageClick(i + 1, data, true));
@@ -357,6 +370,7 @@ function handleImageClick(i, data, navigation = false) {
     if (j != i) {
       document.querySelector('#camera_'+j).setAttribute('active', 'false');
       document.querySelector('#nextImage_'+j).style.display = 'none';
+      document.querySelector('#image'+j).setAttribute('visible', 'false');
       document.querySelector('#lastImage_'+j).style.display = 'none';
     }
   }
@@ -370,6 +384,8 @@ function handleImageClick(i, data, navigation = false) {
 
   if (imageCamActive == 'true') {
     let infoBox = document.querySelector('#currentImageInfo');
+    
+    document.querySelector('#image'+i).setAttribute('visible', 'true');
     infoBox.style.display = 'block';
 
     infoBox.innerHTML = `
@@ -377,6 +393,7 @@ function handleImageClick(i, data, navigation = false) {
       <h6>${data[i-1].artistName}</h6>
       <p>${data[i-1].description}</p>
     `;
+  
     nextNavButton.style.display = 'block';
     lastNavButton.style.display = 'block';
     
@@ -384,6 +401,9 @@ function handleImageClick(i, data, navigation = false) {
     document.querySelector('#currentImageInfo').style.display = 'none';
     nextNavButton.style.display = 'none';
     lastNavButton.style.display = 'none';
+    for (let j = 1; j <= data.length; j++) {
+      document.querySelector('#image'+j).setAttribute('visible', 'true');
+    }
   }
 
 
@@ -393,10 +413,10 @@ function handleImageClick(i, data, navigation = false) {
   document.querySelector('#camera_'+i).setAttribute('active', imageCamActive);
   document.querySelector('#pawn').setAttribute('position', `${newPosition.x} 0 ${newPosition.z}`);
 
-  for (let j = 1; j <= data.length; j++) {
-    console.log("camera_"+j, "active: ", document.querySelector('#camera_'+j).getAttribute('active'));
-  }
-  console.log("pawn", "active: ", document.querySelector('#pawn').getAttribute('active'));
+  // for (let j = 1; j <= data.length; j++) {
+  //   console.log("camera_"+j, "active: ", document.querySelector('#camera_'+j).getAttribute('active'));
+  // }
+  // console.log("pawn", "active: ", document.querySelector('#pawn').getAttribute('active'));
 }////////////////////////////////////////////////// handle image click ende ------------------------------------------------
 
 /////////////////////////////////////////////////// Wand erstellen /////////////////////////////////////////////////////////
@@ -520,16 +540,16 @@ function createBasicRoomLight(segmentHeight, light) {
   while (light == true) {       
     let newLight = document.createElement("a-light");
     newLight.setAttribute("type", "ambient");
-    newLight.setAttribute("light", "type: point; intensity: .5; castShadow: true");
+    newLight.setAttribute("light", "type: point; castShadow: true");
     newLight.setAttribute("color", "white");
-    newLight.setAttribute("intensity", "0.3");
+    newLight.setAttribute("intensity", "0.04");
     newLight.setAttribute("position", `0 ${segmentHeight/2} 0`);
     document.getElementById("aScene").appendChild(newLight);
 
     let areaLight = document.createElement("a-light");
     areaLight.setAttribute("type", "ambient");
     areaLight.setAttribute("color", "white");
-    areaLight.setAttribute("intensity", "0.3");
+    areaLight.setAttribute("intensity", "0.8");
     document.getElementById("aScene").appendChild(areaLight);
 
     // let floorLight = document.createElement("a-entity");
@@ -626,6 +646,32 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
       secondCornerWall.setAttribute("depth", "0.01%");
       secondCornerWall.setAttribute("shadow", "cast: false; receive: true");
     document.getElementById("corner_" + i).appendChild(secondCornerWall);
+
+
+
+
+    let floorLightWidth = 0.5;
+    let floorLight = document.createElement("a-entity");
+      floorLight.setAttribute("id", "floorLight_" + i);
+      floorLight.setAttribute("class", "floor-light");
+      floorLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; penumbra: 1;`);
+      floorLight.setAttribute("position", `${segmentSize/2} ${0.001-segmentHeight/2} ${-segmentSize/2}`);
+      floorLight.setAttribute("rotation", `90 -90 0`);
+    document.getElementById("corner_" + i).appendChild(floorLight);
+
+    let roofLight = document.createElement("a-entity");
+      roofLight.setAttribute("id", "roofLight_" + i);
+      roofLight.setAttribute("class", "floor-light");
+      roofLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; penumbra: 1;`);
+      roofLight.setAttribute("position", `${segmentSize/2} ${-0.001+segmentHeight/2} ${-segmentSize/2}`);
+      roofLight.setAttribute("rotation", `-90 -90 0`);
+    document.getElementById("corner_" + i).appendChild(roofLight);
+
+
+
+
+
+
     ////////////////////////////////////////////////// create corner floor
     let cornerFloor = document.createElement("a-plane");
       cornerFloor.setAttribute("id", "cornerFloor_" + i);
@@ -702,20 +748,22 @@ AFRAME.registerComponent('check-coordinates', {
     var currentPosition = instanceOfCamera.getAttribute('position');
 
     if (currentPosition.x > xRangeStart) {
-      instanceOfCamera.setAttribute('position', `${currentPosition.x - 0.1} 0 ${currentPosition.z}`);
+      instanceOfCamera.setAttribute('position', `${xRangeStart} 0 ${currentPosition.z}`);
 
     }
     else if (currentPosition.x < xRangeEnd) {
-      instanceOfCamera.setAttribute('position', `${currentPosition.x + 0.1} 0 ${currentPosition.z}`);
+      instanceOfCamera.setAttribute('position', `${xRangeEnd} 0 ${currentPosition.z}`);
 
     }
     if (currentPosition.z > zRangeStart) {
-      instanceOfCamera.setAttribute('position', `${currentPosition.x} 0 ${currentPosition.z - 0.1}`);
+      instanceOfCamera.setAttribute('position', `${currentPosition.x} 0 ${zRangeStart}`);
 
     }
     else if (currentPosition.z < zRangeEnd) {
-      instanceOfCamera.setAttribute('position', `${currentPosition.x} 0 ${currentPosition.z + 0.1}`);
+      instanceOfCamera.setAttribute('position', `${currentPosition.x} 0 ${zRangeEnd}`);
 
     }
   }
 });//////////////////////////////////////////////// collision erstellen ende -----------------------------------------------
+
+
