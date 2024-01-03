@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" width="15.91187" height="18.75401" viewBox="0 0 15.91187 18.75401">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #000;
+        stroke-linecap: square;
+        stroke-miterlimit: 10;
+        stroke-width: .91581px;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="m14.7937,9.50929L6.97841.90297H1.73542l7.81755,8.66356L1.26606,17.75844l6.17369-.10532,7.35395-8.14382Z"/>
+</svg>
