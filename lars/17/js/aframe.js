@@ -9,7 +9,7 @@ const imageWidth = 1.5;
 const gapWidth = 2.5;
 const segmentSize = imageWidth + gapWidth;
 const segmentHeight = 4;
-const light = true;
+let light = true;
 
 let imageData = [];
 
@@ -78,7 +78,7 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   ////////////////////////////////// Things that happen no matter how many images //////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   createBasicRoomLight(segmentHeight, light);
-  finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomColor, expoData);
+  finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomColor, light);
 
   connectingTheOverlays(expoData, homePositionOfCamera);
 
@@ -171,7 +171,11 @@ function getExpoHashFromURL() {
       window.location.href = url + '?' + userInput;
     }
   }
-  else if (expoHash.includes(',')) {
+  if (expoHash.includes('lightoff')) {
+    light = false;
+    expoHash = expoHash.replace(/lightoff/g, "");
+  }
+  if (expoHash.includes(',')) {
     // wenn die url , enthält, dann gib beide als array zurück
     expoHash = expoHash.split(',');
   }
@@ -317,6 +321,7 @@ function createImage(i, data, segmentSize, segmentHeight) {
       newCamera.setAttribute("rotation", `0 0 0`);
       newCamera.setAttribute("active", "false");
       newCamera.setAttribute("fov", "145");
+      newCamera.setAttribute("raycaster", "objects: .target;");
       newCamera.setAttribute("wasd-controls", "enabled: false");
       newCamera.setAttribute("look-controls", "enabled: false");
       newCamera.setAttribute("cursor", "rayOrigin: mouse; fuse: false;");
@@ -331,16 +336,35 @@ function createImage(i, data, segmentSize, segmentHeight) {
       nextButton.setAttribute("style", "display: none;");
       nextButton.setAttribute("style", "pointer-events: auto;");
       nextButton.setAttribute("src", "00_media/04_svg/right_icon.svg");
+      nextButton.addEventListener('mouseenter', () => {
+        nextButton.style.opacity = "0.5";
+      });
+      
+      // Mouse leaves the element
+      nextButton.addEventListener('mouseleave', () => {
+        nextButton.style.opacity = "1";
+      });
+
+
+
     document.getElementById("overlayMain").appendChild(nextButton);
 
     let lastButton = document.createElement("img");
       lastButton.setAttribute("id", "lastImage_"+i);
       lastButton.setAttribute("class", "arrow left");
       lastButton.setAttribute("title", "To the next image");
-      lastButton.setAttribute("style", "display: none;");
-      lastButton.setAttribute("style", "right: auto; left: 0;");
-      lastButton.setAttribute("style", "pointer-events: auto;");
+      lastButton.setAttribute("style", "display: none; pointer-events: auto; opacity: 1;");
+      // lastButton.setAttribute("style", "right: auto; left: 0;");
+      // lastButton.setAttribute("style", "pointer-events: auto;");
       lastButton.setAttribute("src", "00_media/04_svg/right_icon.svg");
+      lastButton.addEventListener('mouseenter', () => {
+        lastButton.style.opacity = "0.5";
+      });
+      
+      // Mouse leaves the element
+      lastButton.addEventListener('mouseleave', () => {
+        lastButton.style.opacity = "1";
+      });
     document.getElementById("overlayMain").appendChild(lastButton);
 
     lastButton.addEventListener('click', () => handleImageClick(i + 1, data, true));
@@ -537,24 +561,33 @@ function createLabel(i, data, segmentSize, segmentHeight) {
 
 /////////////////////////////////////////////////// Licht erstellen ////////////////////////////////////////////////////////
 function createBasicRoomLight(segmentHeight, light) {
-  while (light == true) {       
     let newLight = document.createElement("a-light");
-    newLight.setAttribute("type", "ambient");
-    newLight.setAttribute("light", "type: point; castShadow: true");
-    newLight.setAttribute("color", "white");
-    newLight.setAttribute("intensity", "0.04");
-    newLight.setAttribute("position", `0 ${segmentHeight/2} 0`);
+      newLight.setAttribute("light", "type: point; castShadow: true");
+      newLight.setAttribute("color", "white");
+      newLight.setAttribute("intensity", "0.04");
+      newLight.setAttribute("position", `0 ${segmentHeight/2} 0`);
     document.getElementById("aScene").appendChild(newLight);
 
     let areaLight = document.createElement("a-light");
-    areaLight.setAttribute("type", "ambient");
-    areaLight.setAttribute("color", "white");
-    areaLight.setAttribute("intensity", "0.8");
+      areaLight.setAttribute("type", "ambient");
+      areaLight.setAttribute("color", "white");
+      areaLight.setAttribute("intensity", "0.8");
     document.getElementById("aScene").appendChild(areaLight);
 
+    if (light == false) {
+    areaLight.setAttribute("intensity", "0.2");
+    }
+    // for (let i = 1; i <= data.length; i++) {
+    // let imageLight = document.createElement("a-light");
+    //   imageLight.setAttribute("light", "type: point; castShadow: true");
+    //   imageLight.setAttribute("color", "white");
+    //   imageLight.setAttribute("intensity", "0.6");
+    //   imageLight.setAttribute("position", `0 0 0`);
+    // document.getElementById("image"+i).appendChild(imageLight);
+    // }    
     // let floorLight = document.createElement("a-entity");
     // floorLight.setAttribute("id", "bodenlicht");
-    // floorLight.setAttribute("area-light", "intensity: 1; width: 40; height: 1; color: white; penumbra: 1;");
+    // floorLight.setAttribute("area-light", "intensity: 1; width: 40; height: 1; color: white; ");
     // floorLight.setAttribute("position", "-20 0.001 -9.5");
     // floorLight.setAttribute("rotation", "90 0 0");
     // document.getElementById("aScene").appendChild(floorLight);
@@ -565,16 +598,14 @@ function createBasicRoomLight(segmentHeight, light) {
     // width: 40; 
     // height: 1; 
     // color: white; 
-    // penumbra: 1;" 
+    // " 
     // position="-20 0.001 -9.5" 
     // rotation="90 0 0"
     // ></a-entity>
-    break;
-  }
 }////////////////////////////////////////////////// Licht erstellen ende ---------------------------------------------------
 
 /////////////////////////////////////////////////// finish the room ////////////////////////////////////////////////////////
-function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomColor, expoData){
+function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomColor, light){
   ////////////////////////////////////////////////// create middle floor 
   let middleFloor = document.createElement("a-plane");
     middleFloor.setAttribute("id", "middleFloor");
@@ -654,7 +685,7 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
     let floorLight = document.createElement("a-entity");
       floorLight.setAttribute("id", "floorLight_" + i);
       floorLight.setAttribute("class", "floor-light");
-      floorLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; penumbra: 1;`);
+      floorLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; `);
       floorLight.setAttribute("position", `${segmentSize/2} ${0.001-segmentHeight/2} ${-segmentSize/2}`);
       floorLight.setAttribute("rotation", `90 -90 0`);
     document.getElementById("corner_" + i).appendChild(floorLight);
@@ -662,12 +693,16 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
     let roofLight = document.createElement("a-entity");
       roofLight.setAttribute("id", "roofLight_" + i);
       roofLight.setAttribute("class", "floor-light");
-      roofLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; penumbra: 1;`);
+      roofLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; `);
       roofLight.setAttribute("position", `${segmentSize/2} ${-0.001+segmentHeight/2} ${-segmentSize/2}`);
       roofLight.setAttribute("rotation", `-90 -90 0`);
     document.getElementById("corner_" + i).appendChild(roofLight);
 
-
+    console.log("light: ", light);
+    if (light == false) {
+      floorLight.setAttribute("area-light", `intensity: 1; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth*2}; color: white; `);
+      roofLight.setAttribute("area-light", `intensity: 1; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth*2}; color: white; `);
+      }
 
 
 
@@ -766,4 +801,36 @@ AFRAME.registerComponent('check-coordinates', {
   }
 });//////////////////////////////////////////////// collision erstellen ende -----------------------------------------------
 
+
+// Get the modal
+var modal = document.getElementById("einstellungen");
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+      modal.style.display = "none";
+  }
+}
+
+// Handle the form submission
+document.getElementById("checkboxForm").onsubmit = function(event) {
+  event.preventDefault();
+
+  // Get the 'lightoff' checkbox
+  var lightOffCheckbox = document.querySelector('input[name="light"][value="lightoff"]');
+
+  // Get current URL and parameters
+  var currentUrl = new URL(window.location.href);
+  var baseUrl = currentUrl.href.split('%20lightoff')[0];
+
+  // Add or remove 'lightoff' based on the checkbox state
+  if (lightOffCheckbox.checked) {
+    // Append 'lightoff' to the URL
+    window.location.href = baseUrl + " lightoff";
+  } else {
+      // Use the base URL without 'lightoff'
+      window.location.href = baseUrl;
+  }
+};
 

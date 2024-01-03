@@ -177,20 +177,20 @@ a{
 
 .overlayIconContainerEnd{
     
-        height: 100%;
+    height: 100%;
 
-        margin-top: auto;
-        margin-bottom: auto;
-        margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
 
-        align-items: center;
-        justify-content: right;
+    align-items: center;
+    justify-content: right;
 
 
 }
 
 .overlayIcon{
-    height: 80%;
+    max-height: 70%;
 
     margin-top: auto;
     margin-bottom: auto;
@@ -261,6 +261,16 @@ a{
     border-radius: 5px;
 }
 
+
+#heeeelp {
+    display: none; /* Standardmäßig versteckt, bis ein Bild ausgewählt wird */
+    position: absolute; /* oder eine andere Positionierung je nach Bedarf */
+    bottom: 50%; /* Abstand zum unteren Rand des OverlayMain */
+    background-color: rgba(255, 255, 255, 0.8); /* Hintergrundfarbe mit Transparenz */
+    padding: 10px;
+    border-radius: 5px;
+}
+
 .arrow {
     position: absolute;
     top: 50%;
@@ -277,4 +287,58 @@ a{
     left: 0;
     right: auto;
     transform: rotate(180deg);
+}
+
+#help {
+    display: none;
+    background-color: #f4f4f4; /* Light grey background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    font-family: 'Arial', sans-serif; /* Clean font */
+    color: #333; /* Dark grey text for readability */
+    max-width: 80vw; /* Limit the width of the div */
+    min-width: 50vw;
+}
+
+#helpTitle {
+    color: #2a2a2a; /* Slightly darker color for the title */
+    margin-bottom: 10px;
+}
+
+#helpDescription, #enjoyMessage {
+    margin-bottom: 16px;
+    line-height: 1.5; /* Improved readability for longer text */
+}
+
+#helpList {
+    list-style: inside square; /* Stylish square bullets */
+    padding-left: 0; /* Align with the rest of the text */
+}
+
+#helpList li {
+    margin-bottom: 8px; /* Space between list items */
+    line-height: 1.5;
+}
+
+/* Optional: Responsive design for smaller screens */
+@media (max-width: 600px) {
+    #help {
+        padding: 10px;
+        max-width: 90%;
+    }
+}
+
+
+#einstellungen {
+    display: none;
+    pointer-events: all;
+    background-color: #f4f4f4; /* Light grey background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    font-family: 'Arial', sans-serif; /* Clean font */
+    color: #333; /* Dark grey text for readability */
+    max-width: 80vw; /* Limit the width of the div */
+    min-width: 50vw;
 }

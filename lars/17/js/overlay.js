@@ -622,7 +622,11 @@ function event_home_icon() {
 function event_guide_icon() {
 
     guide_icon.addEventListener("click", function () {
-
+        if (document.querySelector("#help").style.display == "block") {
+            document.querySelector("#help").style.display = "none";
+        } else {
+            document.querySelector("#help").style.display = "block";
+        }
     });
 
 
@@ -658,11 +662,12 @@ function event_guide_icon() {
 function event_settings_icon() {
 
     settings_icon.addEventListener("click", function () {
-            
+        if (document.querySelector("#einstellungen").style.display == "block") {
+            document.querySelector("#einstellungen").style.display = "none";
+        } else {
+            document.querySelector("#einstellungen").style.display = "block";
         }
-
-
-    );
+    });
 
 
     settings_icon.addEventListener("mouseover", function () {
