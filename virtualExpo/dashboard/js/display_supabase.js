@@ -88,6 +88,10 @@ disablePointerEvents(infoArtwork);
 disablePointerEvents(inputUploadContainer);
 disablePointerEvents(inputOrgaContainer);
 
+eventButtonNewExpo();
+
+
+
 
 
 //display_listExpo_seq();
@@ -109,6 +113,9 @@ disablePointerEvents(inputOrgaContainer);
             console.log("dashboardObject_original!!!: ", dashboardObject_original)
 
             currentArrayExpo = dashboardObject_original.arrayExpo;
+
+            //wenn arrayExpo nicht leer
+            if (currentArrayExpo.length !== 0){
         
             await display_arrayExpo();
 
@@ -129,9 +136,12 @@ disablePointerEvents(inputOrgaContainer);
 
            /*  await selectLatestExpo();*/
 
+            }
+
             await setInfoExpo_seq();
 
             await display_listArtwork_seq();
+            
 
             display_orga_seq();
 
@@ -339,7 +349,7 @@ disablePointerEvents(inputOrgaContainer);
 
            await displayInfoExpo();
 
-            eventButtonNewExpo();
+            //eventButtonNewExpo();
 /* 
            eventButtonEditExpo();
 
@@ -809,13 +819,27 @@ disablePointerEvents(inputOrgaContainer);
 
             console.log("functionExecuted: display_listArtwork_seq()");
 
+            if (currentArrayExpo.length !== 0){
+
             await display_arrayArtwork();
+
+            
+
+            console.log("currentArrayArtworkExpo: ", currentArrayArtworkExpo);
+
+            if (currentArrayArtworkExpo.length !== 0){
 
             await eventArtworkContainer();
 
             await check_selectedArtworkID_localStorage();
 
+            
+
             await display_infoArtwork_seq();
+
+        }
+
+        }
            
 
         }
@@ -837,6 +861,8 @@ disablePointerEvents(inputOrgaContainer);
 
                     let listArtworkContainer = document.getElementById("listArtworkContainer");
                     listArtworkContainer.innerHTML = "";
+
+
 
                     for (let artwork in currentArrayArtworkExpo){
 
