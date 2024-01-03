@@ -1,0 +1,404 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: 'Inter', sans-serif;
+
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 0.5vw;
+    margin: 0;
+
+
+}
+
+header{
+    width: 100%;
+    height: 6%;
+    background-color: #ffffff;
+    /* padding: 0.1vw; */
+    
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+main{
+    width: 100%;
+    height: 91%;
+    background-color: #ffffff;
+    /* padding: 0.1vw; */
+    
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+footer{
+    width: 100%;
+    height: 3%;
+    background-color: #ffffff;
+    /* padding: 0.1vw; */
+    
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+button{
+    cursor: pointer;
+
+    min-height: 1.1vw;
+}
+
+
+#headerBody{
+    height: 6%;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#linkLogo_headerBody{
+    height: 100%;
+
+}
+
+#logo_headerBody{
+    height: 100%;
+}
+
+
+
+
+
+#mainBody{
+    height: 89%;
+
+
+    justify-content: flex-start;
+}
+
+#footerBody{
+    height: 5%;
+}
+
+.sectionDashboard{
+    width: 33%;
+    height: 100%;
+    background-color: #ededed;
+
+    padding: 0.2vw;
+ 
+
+    
+}
+
+
+.sectionDashboard > header{
+    background-color: #ededed;
+
+    
+
+}
+
+.sectionDashboard > main {
+
+    
+    
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+
+
+
+
+}
+
+.sectionDashboard > footer{
+    background-color: #ededed;
+
+}
+
+.subSectionDashboard{
+    width: 100%;
+    
+
+   flex-grow: 1;
+
+    max-height: 75%;
+    min-height: 25%; 
+
+    
+    
+    
+   
+    
+
+    
+}
+
+.sectionDashboard > main > :nth-child(2){
+    flex-grow: 1;
+
+
+    
+
+}
+
+
+
+.subSectionDashboard > :is(header){
+    min-height: 2vw;
+
+    background-color: #ededed;
+    padding: 0.3;
+
+    
+
+}
+
+.subSectionDashboard > :is(main){
+    background-color: #ffffff;
+    padding: 0;
+    justify-content: flex-start;
+
+    overflow-y: auto;
+
+
+    
+
+}
+
+
+.subSectionDashboard > :is(footer){
+    min-height: 1vw;
+    background-color: #ededed;
+
+    padding: 0;
+    
+
+}
+
+.wrapperButtonHeaderSection{
+    
+    margin-left: auto;
+    padding: 0 0.5vw 0 0.5vw;
+}
+
+
+
+/* SECTION Auth================================================================================================================================================================================*/
+
+    #sectionAuth{
+        margin-left: auto;
+        height: 80%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+
+
+    }
+
+    #containerOrgaLogo{
+        height: 100%;
+
+    
+    
+    }
+    
+    #imgOrgaLogo{
+        height: 100%;
+        object-fit: contain;
+    
+    }
+        
+
+    #wrapperAuth{
+
+        height: 30%;
+
+        display: flex;
+        flex-direction: row;
+
+
+    }
+
+
+
+    #wrapperDashboard {
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    
+    }
+
+
+
+
+
+
+
+
+
+
+/* SECTION Expo================================================================================================================================================================================*/
+
+#listExpoContainer{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.expoContainer{
+    cursor: pointer;
+    padding-left: 0.2vw;
+
+    background-color: #ffffff;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.expoContainer:hover{
+    background-color: #ededed;
+}
+
+.wrapperButtonExpoContainer{
+
+
+    margin-left: auto;
+    padding: 0 0.5vw 0 0.5vw;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.expoButton{
+    margin-left: 0.2vw;
+}
+
+
+/* SECTION Artwork ================================================================================================================================================================================*/
+
+
+#wrapperSectionArtwork{
+    width: 100%;
+    height: 100%;
+
+    padding-left: 0.2vw;
+
+    display: flex;
+    flex-direction: row;
+    
+}
+
+#wrapperSectionArtwork > :is(section){
+    width: 50%;
+   
+}
+
+.artworkContainer{
+    cursor: pointer;
+    padding-left: 0.2vw;
+
+    background-color: #ffffff;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.artworkContainer:hover{
+    background-color: #ededed;
+}
+
+#previewArtworkContainer{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+#previewArtworkContainer > img{
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+}
+
+
+
+/* GENERAL =======================================================================================================================================================================================*/
+
+.selectedElement{
+
+    background-color: rgb(202, 202, 254);
+
+}
+
+.lockedElement{
+    opacity: 0.5;
+}
+
+/* SECTION Upload =======================================================================================================================================================================================*/
+
+
+
+#registerWrapper{
+    margin-bottom: auto;
+}
+
+
+
+#sectionOrga{
+    height: 100%;
+}
+
+#wrapperOrga{
+    height: 100%;
+
+}
+
+#inputOrgaContainer{
+    height: 100%;
+}
+
+
+
+#previewLogoOrga{
+    max-height: 100%;
+
+    object-fit: contain;
+
+    
+}

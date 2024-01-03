@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>virtualExpo: Dashboard</title>
+
+    <!-- EINBINGDUNG css -->
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <!-- EINBINGDUNG js extern-->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.3.0/crypto-js.js"></script>
+
+    <!-- EINBINGDUNG js intern-->
+    <script src="js/general.js"></script>
+    <script type="module" src="js/setup_supabase.js"></script>
+    <script type="module" src="js/auth_supabase.js"></script>
+    <!-- <script type="module"  src="js/login_supabase.js"></script> -->
+
+    <script type="module"  src="js/read_supabase.js"></script>
+    <script type="module"  src="js/display_supabase.js"></script>
+    <script type="module"  src="js/edit_supabase.js"></script>
+
+</head>
+
+
+<body>
+
+    <header id="headerBody">
+        <h1 style="display: none;">virtualExpo</h1>
+
+        <a id="linkLogo_headerBody" href="../index.html" target="_blank">
+
+            <img id="logo_headerBody" src="../00_media/04_svg/virtualExpo_logo.svg" alt="">
+
+        </a>
+
+
+
+        <section id="sectionAuth">
+
+            <div id="wrapperAuth" >
+
+                <div id="inputAuthContainer" class="authFalse" >
+            
+                <label for="inputMailUser">Mail</label>
+                <input id="inputMailUser" type="text">
+            
+                <label for="inputPassUser">Passwort</label>
+                <input id="inputPassUser" type="text">
+            
+                </div>
+            
+
+            <p id="infoUser" class="authTrue">infoUser</p> 
+
+
+            <button id="buttonLogin" class="authFalse">Anmelden</button>
+        
+        
+            <button id="buttonLogout" class="authTrue" >Abmelden</button>
+
+            
+
+
+            </div>
+
+            
+        
+            <p id="infoAuth"></p>
+        
+            <p id="redirectLoginRegister" class="authFalse" >Noch kein Konto? <a href="register.html"> Hier registrieren.</a> </p>
+        
+        
+        
+        </section>
+
+        <div id="containerOrgaLogo" ></div>
+    
+    </header>
+
+   
+        
+    <main id="mainBody">
+        <header id="headerMain" class="header" >
+            <h2>Dashboard</h2>
+
+          
+        </header>
+
+        <p id="infoMainBody">infoMainBody</p>
+        
+
+        <main id="mainMain" class="authTrue">
+
+            <div id="wrapperDashboard" class="">
+
+                <section id="sectionExpo" class="sectionDashboard">
+
+                    <header id="headerSectionExpo" >
+                        <h3>Expo</h3>
+                    </header>
+
+                    <main id="mainSectionExpo" >
+
+                        <section id="sectionListExpo" class="subSectionDashboard">
+
+                            <header id="headerSectionListExpo">
+                                <h4>List</h4>
+        
+                                <div class="wrapperButtonHeaderSection">
+                                    <button id="buttonNewExpo" class="buttonHeaderSection">New</button>
+                                
+                                </div>
+        
+        
+                            </header>
+        
+                            <main id="mainSectionListExpo" >
+                                <div id="listExpoContainer">
+
+        
+                                </div>
+                            </main>
+        
+                            <footer id="footerSectionListExpo"></footer>
+    
+    
+    
+    
+                        </section>
+    
+                        <section id="sectionInfoExpo" class="subSectionDashboard">
+    
+                            <header id="headerSectionInfoExpo">
+                                <h4>Info</h4>
+        
+                                <div class="wrapperButtonHeaderSection">
+                                    <button id="buttonEditExpo" class="buttonHeaderSection">Edit</button>
+
+                                    <button id="buttonSaveExpo" class="buttonHeaderSection" style="display: none;" >Save</button>
+                                
+                                    <button id="buttonCreateExpo" class="buttonHeaderSection" style="display: none;"> Create </button>
+
+                                </div>
+        
+        
+                            </header>
+        
+                            <main id="mainSectionInfoExpo" >
+
+                                <div id="infoExpo">
+
+                                    <label for="inputExpoName">Expo Name:</label>
+                                    <input type="text" id="inputExpoName" name="inputExpoName" required placeholder="name your virtualExpo"><br>
+                                
+                                    <!-- Expo Start Date -->
+                                    <label for="inputExpoStart">Expo Start Date:</label>
+                                    <input type="date" id="inputExpoStart" name="inputExpoStart" ><br>
+                                
+                                    <!-- Expo End Date -->
+                                    <label for="inputExpoEnd">Expo End Date:</label>
+                                    <input type="date" id="inputExpoEnd" name="inputExpoEnd" ><br>
+                                
+                                    <label for="inputExpoLink">External Link:</label>
+                                    <input type="text" id="inputExpoLink" name="inputExpoLink" placeholder="link to realExpo"><br>
+                        
+                        
+                        
+                                
+                                </div>
+
+
+                            </main>
+        
+                            <footer id="footerSectionInfoExpo" ></footer>
+    
+    
+                        </section>
+    
+                    </main>
+
+                    <footer id="footerSectionExpo" ></footer>
+
+
+
+                   
+                  
+
+                </section>
+
+                <section id="wrapperSectionArtwork" class="">
+    
+                        <section id="sectionArtwork1" class="sectionDashboard" >
+
+                            <header id="headerSectionArtwork1" >
+                                <h3>Artwork</h3>
+                            </header>
+
+                            <main id="mainSectionArtwork1" >
+
+                                <section id="sectionListArtwork" class="subSectionDashboard">
+
+                                    <header id="headerSectionListArtwork" >
+                                        <h4>List</h4>
+                
+                                        <div class="wrapperButtonHeaderSection">
+                                            <button id="buttonAddArtwork" class="buttonHeaderSection">Add</button>
+                                        
+                                        </div>
+                
+                                    </header>
+                
+                                    <main id="mainSectionListArtwork" >
+                                        
+                                        <div id="listArtworkContainer">
+
+                                        </div>
+
+                                    </main>
+                
+                                    <footer id="footerSectionListArtwork" ></footer>
+
+
+                                </section>
+
+                                <section id="sectionUploadArtwork" class="subSectionDashboard">
+
+                                    <header id="headerSectionUploadArtwork" >
+                                        <h4>Upload</h4>
+                
+                                        <div class="wrapperButtonHeaderSection">
+                                            <button id="buttonUploadArtwork" class="buttonHeaderSection" style="display: none;">Upload</button>
+                                        
+                                        </div>
+                
+                                    </header>
+                
+                                    <main id="mainSectionUploadArtwork" >
+
+                                        <div id="inputUploadContainer" >
+
+            
+                                            <!-- <input type="file" id="inputArtworkUpload" accept="jpeg, .jpg, .png, .pdf" /> -->
+                                        
+                                            <label for="inputArtworkUploadFile">Files</label>
+                                            <input type="file" id="inputArtworkUploadFile"  multiple  value=""/> 
+                                        
+                                            <!-- <button id="buttonArtworkAddFile" style="display: none;">Add Files</button>--> <br> 
+                                        
+                                        
+                                            <label for="inputArtworkUploadFolder">Folder</label>
+                                            <input type="file" id="inputArtworkUploadFolder" name="inputArtworkUploadFolder" webkitdirectory directory value=""/>
+                                        
+                                            <!-- <button id="buttonArtworkAddFolder" style="display: none;">Add Folder</button> -->
+                                            
+                                        
+                                        </div>
+
+                                        <div id="listArtworkUploadContainer" >
+
+                                        </div>
+
+
+                                    </main>
+                
+                                    <footer id="footerSectionUploadArtwork" ></footer>
+
+                                </section>
+
+                            </main>
+
+                            <footer id="footerSectionArtwork1" ></footer>
+                        
+
+                        </section>
+            
+                        <section id="sectionArtwork2" class="sectionDashboard" >
+
+                            <header id="headerSectionArtwork2" >
+
+
+                            </header>
+
+                            <main id="mainSectionArtwork2" >
+
+                                <section id="sectionPreviewArtwork" class="subSectionDashboard">
+
+                                    <header id="headerSectionPreviewArtwork" >
+                                        <h4>Preview</h4>
+                                    </header>
+            
+                                    <main id="mainSectionPreviewArtwork" >
+
+                                        <div id="previewArtworkContainer">
+
+                                            <img id="imgPreviewArtwork"  src="" alt="">
+
+                                        </div>
+                                    </main>
+            
+                                    <footer id="footerSectionPreviewArtwork" ></footer>
+
+
+                                </section>
+
+                                <section id="sectionInfoArtwork" class="subSectionDashboard">
+
+                                    <header id="headerSectionInfoArtwork" >
+                                        <h4>Info</h4>
+
+                                        <div class="wrapperButtonHeaderSection">
+                                            <button id="buttonEditArtwork" class="buttonHeaderSection">Edit</button>
+                                            <button id="buttonSaveArtwork" class="buttonHeaderSection" style="display: none;">Save</button>
+                                        
+                                        </div>
+
+                                    </header>
+            
+                                    <main id="mainSectionInfoArtwork" >
+
+                                        <div id="infoArtwork">
+                                            <label for="inputArtistName">Artist Name:</label>
+                                            <input type="text" id="inputArtistName" name="inputArtistkName" required placeholder="name of artist" ><br>
+                                            
+                                            <label for="inputArtworkTitle">Title:</label>
+                                            <input type="text" id="inputArtworkTitle" name="inputArtworkTitle" required placeholder="title of artwork"><br>
+
+                                            <!-- input year -->
+                                            <label for="inputArtworkYear">Year:</label>
+                                            <input type="text" id="inputArtworkYear" name="inputArtworkYear" required placeholder="year of creation"><br>
+
+                                            <!-- input month -->
+                                            <label for="inputArtworkMonth">Month:</label>
+                                            <input type="text" id="inputArtworkMonth" name="inputArtworkMonth" placeholder="month of creation"><br>
+
+                                            <!-- input medium -->
+                                            <label for="inputArtworkMedium">Medium:</label>
+                                            <input type="text" id="inputArtworkMedium" name="inputArtworkMedium" required placeholder="medium of artwork"><br>
+
+                                            <!-- input surface -->
+                                            <label for="inputArtworkSurface">Surface:</label>
+                                            <input type="text" id="inputArtworkSurface" name="inputArtworkSurface" required placeholder="surface of artwork"><br>
+
+                                            <!-- input height -->
+                                            <label for="inputArtworkHeight">Height:</label>
+                                            <input type="text" id="inputArtworkHeight" name="inputArtworkHeight" required placeholder="height of artwork"><br>
+
+                                            <!-- input width -->
+                                            <label for="inputArtworkWidth">Width:</label>
+                                            <input type="text" id="inputArtworkWidth" name="inputArtworkWidth" required placeholder="width of artwork"><br>
+
+                                            <!-- input unit -->
+                                            <label for="inputArtworkUnit">Unit:</label>
+                                            <input type="text" id="inputArtworkUnit" name="inputArtworkUnit" required placeholder="unit of artwork"><br>
+
+                                            <!-- input description -->
+                                            <label for="inputArtworkDescription">Description:</label>
+                                            <input type="text" id="inputArtworkDescription" name="inputArtworkDescription" required placeholder="description of creation"><br>
+
+                                            </div>
+                                    </main>
+            
+                                    <footer id="footerSectionInfoArtwork" ></footer>
+
+
+                                </section>
+
+                            
+
+                            </main>
+
+                            <footer id="footerSectionArtwork2" ></footer>
+
+                        </section>
+                
+                </section>
+    
+            </div>
+
+        </main>
+
+        <footer id="footerMain" class="authTrue">
+
+        </footer>
+
+
+        
+
+      
+        
+
+    </main>
+
+    <footer id="footerBody" class="authTrue">
+
+        <section id="sectionOrga">
+
+            <header id="headerSectionOrga" >
+                <h3>Organisation</h3>
+
+                <div class="wrapperButtonHeaderSection">
+                    <button id="buttonEditOrga" class="buttonHeaderSection">Edit</button>
+                    <button id="buttonSaveOrga" class="buttonHeaderSection" style="display: none;">Save</button>
+
+                </div>
+
+            </header>
+
+            <main>
+
+            <div id="wrapperOrga" >
+
+                <div id="inputOrgaContainer" class="authTrue" >
+            
+                <label for="inputNameOrga">Organisation Name</label>
+                <input id="inputNameOrga" type="text">
+            
+                
+            
+                <label for="inputLinkOrga">Organisation Link</label>
+                <input id="inputLinkOrga" type="text">
+
+                <label for="inputLogoOrga">Organisation Logo</label>
+                <input id="inputLogoOrga" type="file" style="display: none;" >
+                <img id="previewLogoOrga" alt="">
+                <button id="buttonChangeLogoOrga">Change Logo</button>
+                <button id="buttonUploadLogoOrga" style="display: none;" >Upload Logo</button>
+            
+                </div>
+
+            </div>
+
+        </main>
+
+
+
+
+        </section>
+
+    </footer>
+
+
+    
+</body>
+</html>

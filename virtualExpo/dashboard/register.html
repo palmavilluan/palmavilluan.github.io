@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>virtualExpo: Register</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+
+
+
+
+</head>
+<body>
+
+    <header id="headerBody">
+        <h1 style="display: none;" >virtualExpo</h1>
+
+        <a id="linkLogo_headerBody" href="../index.html" target="_blank">
+
+            <img id="logo_headerBody" src="../00_media/04_svg/virtualExpo_logo.svg" alt="">
+
+        </a>
+
+
+
+        <!-- <section id="sectionAuth">
+
+            <div id="wrapperAuth" >
+
+                <div id="inputAuthContainer" class="authFalse" >
+            
+                <label for="inputMailUser">Mail</label>
+                <input id="inputMailUser" type="text">
+            
+                <label for="inputPassUser">Passwort</label>
+                <input id="inputPassUser" type="text">
+            
+                </div>
+
+            <p id="infoUser" class="authTrue">infoUser</p>
+
+
+            <button id="buttonLogin" class="authFalse">Anmelden</button>
+        
+        
+            <button id="buttonLogout" class="authTrue" >Abmelden</button>
+
+            </div>
+        
+            <p id="infoAuth"></p>
+        
+            <p id="redirectLoginRegister" class="authFalse" >Noch kein Konto? <a href="register.html"> Hier registrieren.</a> </p>
+        
+        
+        
+        </Section> -->
+    
+    </header>
+
+    <main>
+
+        <header id="headerMain" class="header" >
+            <h2>Registration</h2>
+        </header>
+
+        <main>
+
+        <div id="registerWrapper">
+
+            <div id="inputAuthContainer">
+        
+                <label for="inputMailUser">Mail</label>
+                <input id="inputMailUser" type="text" required> <br>
+            
+                <label for="inputPassUser">Passwort</label>
+                <input id="inputPassUser" type="text" required> <br>
+
+                <label for="inputNameOrga">Organisation Name</label>
+                <input id="inputNameOrga" type="text" required> <br>
+
+                <label for="inputLogoOrga">Organisation Logo</label>
+                <input id="inputLogoOrga" type="file"> <br>
+
+                <label for="inputLinkOrga">Organisation Link</label>
+                <input id="inputLinkOrga" type="text"> <br>
+                
+            
+                </div>
+            
+                <p id="infoUser">infoUser</p>
+
+                <p id="infoAuth"></p>
+            
+                <br>
+                
+                <button id="buttonRegister">Register</button>
+            
+            
+                <br>
+            
+                <p id="redirectLoginRegister">Bereits registriert? <a href="index.html"> Hier anmelden. </a> </p>
+        
+        
+        
+        </div>
+
+        </main>
+
+    </main>
+
+
+
+
+
+    <!-- ABSCHNITT script einbindung-->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"> </script>
+   
+
+    <script type="module" src="js/setup_supabase.js"></script>
+    <script type="module"  src="js/register_supabase.js"></script>
+
+
+    <!--ENDE ABSCHNITT script einbindung-->
+
+    
+</body>
+</html>
