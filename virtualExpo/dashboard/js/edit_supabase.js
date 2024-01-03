@@ -847,11 +847,21 @@ async function edit_expo_seq() {
                 async function insertArtwork(artwork) {
                 
                     console.log("functionExecuted: insertArtwork()");
+
+                    
+                    let file = artwork.file;
+                    let fileName = file.name;
+                    //remove file extension from fileName
+                    fileName = fileName.split(".")[0];
+                    //console.log("artwork: ", artwork);
+                    //console.log("file: ", file);
+                    //console.log("fileName: ", fileName);
+                    
                 
                     let artworkHash = artwork.artworkHash;
                     let artworkURL = artwork.artworkURL;
                     let artistName = artwork.artistName;
-                    let title = artwork.title;
+                    let title = fileName;
                     let year = artwork.year;
                     let month = artwork.month;
                     let medium = artwork.medium;
@@ -1145,7 +1155,6 @@ async function edit_expo_seq() {
 
                 }//ENDE FUNKTION eventButtonEditOrga()
 
-            
 
                 //FUNKTION eventButtonSaveOrga()
                 function eventButtonSaveOrga(){
