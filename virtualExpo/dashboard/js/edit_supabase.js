@@ -39,7 +39,7 @@ let currentArrayArtworkExpo;
 
 
 
-let visitURL = "https://palmavilluan.github.io" + "/virtualExpo" +"/?";
+let visitURL = "https://palmavilluan.github.io/" + "/virtualExpo/visit" +"/?";
 
 
 
