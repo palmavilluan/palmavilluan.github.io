@@ -17,6 +17,7 @@ const homePositionOfCamera = "0 0 0";
 
 let bigdata = {};
 
+let onloadSuccess = false;
 
 
 
@@ -84,9 +85,19 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   ///////////////////////////////////// Calling the Js file for styling overlay ////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   main(expoData[0].expoName, expoOrganizerData[0].orgaName, expoData[0].expoDate);
+  onloadSuccess = true;
+  console.log("onloadSuccess: ", onloadSuccess);
 });
 
 
+setTimeout(function() {
+  let test = document.querySelector('#image1');
+  console.log("test: ", test);
+  if (!onloadSuccess && test == null) {
+      // If onload did not execute correctly, reload the page
+      location.reload();
+  }
+}, 5000); // Adjust the timeout as needed
 
 
 
@@ -251,123 +262,98 @@ function createSegment(i, data, positionX, rotationY, positionZ) {
 
 /////////////////////////////////////////////////// Bilder erstellen ///////////////////////////////////////////////////////
 function createImage(i, data, segmentSize, segmentHeight) {
-
+  console.log("data start for image ",i,": ", data);
+  console.log("segmentheight: ", segmentHeight);
   if (data[i - 1]){
     let image = new Image();
-    image.src = data[i - 1].artworkURL;
-    let ratio = image.width / image.height;
+    image.onload = function () {
+      let ratio = image.width / image.height;
 
-    let newImg = document.createElement("a-box");
-      newImg.setAttribute("src", image.src);
-      newImg.setAttribute("id", "image" + i);
-      newImg.setAttribute("rotation", `0 0 0`);
-      newImg.setAttribute("class", "image target");
-      
-      if (image.height > image.width) { //hochformat
-        newImg.setAttribute("position", `0 0 -${(segmentSize / 2) - 0.03}`);
-        newImg.setAttribute("width", (segmentHeight/1.5)*ratio);
-        newImg.setAttribute("height", segmentHeight/1.5);
-      }
-      else {                            //querformat
-        newImg.setAttribute("position", `0 0 -${(segmentSize / 2) - 0.03}`);
-        newImg.setAttribute("width", (segmentSize*0.8));
-        newImg.setAttribute("height", (segmentSize*0.8)/ratio);
-      }
-      newImg.setAttribute("depth", "0.001");
-      newImg.setAttribute("shader", "flat");
-      newImg.setAttribute("shadow", "cast: true; receive: false");
-      newImg.setAttribute("data-raycastable", true);
-      // newImg.addEventListener('click', function() {
-      //   // Get the current value of the 'active' attribute
-      //   let RigCamera = document.querySelector('#pawn').getAttribute('active');
-      //   let imageCamActive = document.querySelector('#camera_'+i).getAttribute('active');
-      //   let newPosition = document.querySelector('#segment_'+i).getAttribute('position');
-      
-      //   // Switch the boolean value to its opposite
-      //   RigCamera = RigCamera === 'true' ? 'false' : 'true';
-      //   imageCamActive = imageCamActive === 'true' ? 'false' : 'true';
-
-      //   console.log("this: ", this, '\n', "RigCamera: ", RigCamera, '\n', "imageCamActive: ", imageCamActive, '\n', "newPosition: ", newPosition);
+      let newImg = document.createElement("a-box");
+        newImg.setAttribute("material", `src: ${image.src}`);
+        // newImg.setAttribute("src", image.src);
+        newImg.setAttribute("id", "image" + i);
+        newImg.setAttribute("rotation", `0 0 0`);
+        newImg.setAttribute("class", "image target");
         
-      //   if (imageCamActive == 'true') {
-      //     let infoBox = document.querySelector('#currentImageInfo');
-      //     infoBox.style.display = 'block';
-      //     infoBox.innerHTML = `
-      //       <h1>${data[i-1].title}</h1>
-      //       <h6>${data[i-1].artistName}</h6>
-      //       <p>${data[i-1].description}</p>
-      //     `;
+        if (image.height > image.width) { //hochformat
+          newImg.setAttribute("position", `0 0 -${(segmentSize / 2) - 0.03}`);
+          newImg.setAttribute("width", (segmentHeight/1.5)*ratio);
+          newImg.setAttribute("height", segmentHeight/1.5);
+        }
+        else {                            //querformat
+          newImg.setAttribute("position", `0 0 -${(segmentSize / 2) - 0.03}`);
+          newImg.setAttribute("width", (segmentSize*0.8));
+          newImg.setAttribute("height", (segmentSize*0.8)/ratio);
+        }
+        newImg.setAttribute("depth", "0.001");
+        newImg.setAttribute("shader", "flat");
+        newImg.setAttribute("shadow", "cast: true; receive: false");
+        newImg.setAttribute("data-raycastable", true);
+        console.log("newImg: ", i, newImg);
+      document.getElementById("segment_" + i).appendChild(newImg);
 
-      //   } else {
-      //     document.querySelector('#currentImageInfo').style.display = 'none';
-      //   }
-      
-      //   // Set the new value of the 'active' attribute
-      //   document.querySelector('#pawn').setAttribute('active', RigCamera);
-      //   document.querySelector('#camera_'+i).setAttribute('active', imageCamActive);
-      //   document.querySelector('#pawn').setAttribute('position', `${newPosition.x} 0 ${newPosition.z}`);
-      
-      // });
-    document.getElementById("segment_" + i).appendChild(newImg);
-
-    //////////////////////////////////////////////// Bildkamera erstellen //////////////////////////////////////////////////
-    let newCamera = document.createElement("a-camera");
-      newCamera.setAttribute("id", "camera_" + i);
-      newCamera.setAttribute("position", `0 0 0.5`);
-      newCamera.setAttribute("rotation", `0 0 0`);
-      newCamera.setAttribute("active", "false");
-      newCamera.setAttribute("fov", "145");
-      newCamera.setAttribute("raycaster", "objects: .target;");
-      newCamera.setAttribute("wasd-controls", "enabled: false");
-      newCamera.setAttribute("look-controls", "enabled: false");
-      newCamera.setAttribute("cursor", "rayOrigin: mouse; fuse: false;");
-    document.getElementById("image" + i).appendChild(newCamera);
-    //////////////////////////////////////////////// Bildkamera erstellen ende ---------------------------------------------
+      //////////////////////////////////////////////// Bildkamera erstellen //////////////////////////////////////////////////
+      let newCamera = document.createElement("a-camera");
+        newCamera.setAttribute("id", "camera_" + i);
+        newCamera.setAttribute("position", `0 0 0.5`);
+        newCamera.setAttribute("rotation", `0 0 0`);
+        newCamera.setAttribute("active", "false");
+        newCamera.setAttribute("fov", "145");
+        newCamera.setAttribute("raycaster", "objects: .target;");
+        newCamera.setAttribute("wasd-controls", "enabled: false");
+        newCamera.setAttribute("look-controls", "enabled: false");
+        newCamera.setAttribute("cursor", "rayOrigin: mouse; fuse: false;");
+      document.getElementById("image" + i).appendChild(newCamera);
+      //////////////////////////////////////////////// Bildkamera erstellen ende ---------------------------------------------
 
 
-    let nextButton = document.createElement("img");
-      nextButton.setAttribute("id", "nextImage_"+i);
-      nextButton.setAttribute("class", "arrow");
-      nextButton.setAttribute("title", "To the next image");
-      nextButton.setAttribute("style", "display: none;");
-      nextButton.setAttribute("style", "pointer-events: auto;");
-      nextButton.setAttribute("src", "../00_media/04_svg/right_icon.svg");
-      nextButton.addEventListener('mouseenter', () => {
-        nextButton.style.opacity = "0.5";
-      });
-      
-      // Mouse leaves the element
-      nextButton.addEventListener('mouseleave', () => {
-        nextButton.style.opacity = "1";
-      });
+      let nextButton = document.createElement("img");
+        nextButton.setAttribute("id", "nextImage_"+i);
+        nextButton.setAttribute("class", "arrow");
+        nextButton.setAttribute("title", "To the next image");
+        nextButton.setAttribute("style", "display: none;");
+        nextButton.setAttribute("style", "pointer-events: auto;");
+        nextButton.setAttribute("src", "../00_media/04_svg/right_icon.svg");
+        nextButton.addEventListener('mouseenter', () => {
+          nextButton.style.opacity = "0.5";
+        });
+        
+        // Mouse leaves the element
+        nextButton.addEventListener('mouseleave', () => {
+          nextButton.style.opacity = "1";
+        });
 
 
 
-    document.getElementById("overlayMain").appendChild(nextButton);
+      document.getElementById("overlayMain").appendChild(nextButton);
 
-    let lastButton = document.createElement("img");
-      lastButton.setAttribute("id", "lastImage_"+i);
-      lastButton.setAttribute("class", "arrow left");
-      lastButton.setAttribute("title", "To the next image");
-      lastButton.setAttribute("style", "display: none; pointer-events: auto; opacity: 1;");
-      // lastButton.setAttribute("style", "right: auto; left: 0;");
-      // lastButton.setAttribute("style", "pointer-events: auto;");
-      lastButton.setAttribute("src", "../00_media/04_svg/right_icon.svg");
-      lastButton.addEventListener('mouseenter', () => {
-        lastButton.style.opacity = "0.5";
-      });
-      
-      // Mouse leaves the element
-      lastButton.addEventListener('mouseleave', () => {
-        lastButton.style.opacity = "1";
-      });
-    document.getElementById("overlayMain").appendChild(lastButton);
+      let lastButton = document.createElement("img");
+        lastButton.setAttribute("id", "lastImage_"+i);
+        lastButton.setAttribute("class", "arrow left");
+        lastButton.setAttribute("title", "To the next image");
+        lastButton.setAttribute("style", "display: none; pointer-events: auto; opacity: 1;");
+        // lastButton.setAttribute("style", "right: auto; left: 0;");
+        // lastButton.setAttribute("style", "pointer-events: auto;");
+        lastButton.setAttribute("src", "../00_media/04_svg/right_icon.svg");
+        lastButton.addEventListener('mouseenter', () => {
+          lastButton.style.opacity = "0.5";
+        });
+        
+        // Mouse leaves the element
+        lastButton.addEventListener('mouseleave', () => {
+          lastButton.style.opacity = "1";
+        });
+      document.getElementById("overlayMain").appendChild(lastButton);
 
-    lastButton.addEventListener('click', () => handleImageClick(i + 1, data, true));
-    nextButton.addEventListener('click', () => handleImageClick(i - 1, data, true));
-    newImg.addEventListener('click', () => handleImageClick(i, data));
+      lastButton.addEventListener('click', () => handleImageClick(i + 1, data, true));
+      nextButton.addEventListener('click', () => handleImageClick(i - 1, data, true));
+      newImg.addEventListener('click', () => handleImageClick(i, data));
+    }
+
+    image.src = data[i - 1].artworkURL;
   }
-
+  console.log("data end: ", data);
 }////////////////////////////////////////////////// Bilder erstellen ende --------------------------------------------------
 
 /////////////////////////////////////////////////// handle image click /////////////////////////////////////////////////////
