@@ -342,3 +342,13 @@ a{
     max-width: 80vw; /* Limit the width of the div */
     min-width: 50vw;
 }
+
+#info_icon{
+    display: none;
+    cursor: pointer;
+}
+
+.raycast-ignore {
+    pointer-events: none;
+  }
+  

@@ -17,8 +17,7 @@ const homePositionOfCamera = "0 0 0";
 
 let bigdata = {};
 
-let onloadSuccess = false;
-
+let isImageInfoVisible = false;
 
 
 
@@ -65,7 +64,7 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
     const { positionX, rotationY, positionZ } = createRotationAndPosition(i, numberOfElements, anzahlBilderProWand, segmentSize, halfRoomSize);
                                          data = createSegment(i, data, positionX, rotationY, positionZ);
                                                 createImage(i, data, segmentSize, segmentHeight);
-                                                createWallBehindImage(i, segmentSize, segmentHeight);
+                                                createWallBehindImage(i, data, segmentSize, segmentHeight);
                                                 createFloorAndRoof(i, segmentSize, segmentHeight, roomColor);
                                                 createWarpPoint(i, data, warpPointColor);
                                                 // createLabel(i, data, segmentSize, segmentHeight);
@@ -85,19 +84,9 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   ///////////////////////////////////// Calling the Js file for styling overlay ////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   main(expoData[0].expoName, expoOrganizerData[0].orgaName, expoData[0].expoDate);
-  onloadSuccess = true;
-  console.log("onloadSuccess: ", onloadSuccess);
 });
 
 
-setTimeout(function() {
-  let test = document.querySelector('#image1');
-  console.log("test: ", test);
-  if (!onloadSuccess && test == null) {
-      // If onload did not execute correctly, reload the page
-      location.reload();
-  }
-}, 5000); // Adjust the timeout as needed
 
 
 
@@ -348,7 +337,12 @@ function createImage(i, data, segmentSize, segmentHeight) {
 
       lastButton.addEventListener('click', () => handleImageClick(i + 1, data, true));
       nextButton.addEventListener('click', () => handleImageClick(i - 1, data, true));
-      newImg.addEventListener('click', () => handleImageClick(i, data));
+      newImg.addEventListener('click', (event) => {
+        if (event.target === newImg) {
+          handleImageClick(i, data);
+        }
+      });
+      
     }
 
     image.src = data[i - 1].artworkURL;
@@ -357,66 +351,75 @@ function createImage(i, data, segmentSize, segmentHeight) {
 }////////////////////////////////////////////////// Bilder erstellen ende --------------------------------------------------
 
 /////////////////////////////////////////////////// handle image click /////////////////////////////////////////////////////
-function handleImageClick(i, data, navigation = false) {
+function handleImageClick(i, data, navigation = false, out = false) {
   if (i == 0) {
     i = data.length;
   } else if (i == data.length + 1) {
     i = 1;
   }
+
   // Get the current value of the 'active' attribute
   let RigCamera = document.querySelector('#pawn').getAttribute('active');
   let imageCamActive = document.querySelector('#camera_'+i).getAttribute('active');
   let newPosition = document.querySelector('#segment_'+i).getAttribute('position');
+  let infobutton = document.querySelector('#info_icon');
   
   let lastNavButton = document.querySelector('#lastImage_'+i);
   let nextNavButton = document.querySelector('#nextImage_'+i);
 
-  for (let j = 1; j <= data.length; j++) {
-    if (j != i) {
-      document.querySelector('#camera_'+j).setAttribute('active', 'false');
-      document.querySelector('#nextImage_'+j).style.display = 'none';
-      document.querySelector('#image'+j).setAttribute('visible', 'false');
-      document.querySelector('#lastImage_'+j).style.display = 'none';
-    }
-  }
 
 
-  // Switch the boolean value to its opposite
-  if (navigation == false) {
-    RigCamera = RigCamera === 'true' ? 'false' : 'true';
-  }
-  imageCamActive = imageCamActive === 'true' ? 'false' : 'true';
-
-  if (imageCamActive == 'true') {
-    let infoBox = document.querySelector('#currentImageInfo');
-    
-    document.querySelector('#image'+i).setAttribute('visible', 'true');
-    infoBox.style.display = 'block';
-
-    infoBox.innerHTML = `
-      <h1>${data[i-1].title}</h1>
-      <h6>${data[i-1].artistName}</h6>
-      <p>${data[i-1].description}</p>
-    `;
-  
-    nextNavButton.style.display = 'block';
-    lastNavButton.style.display = 'block';
-    
-  } else {
-    document.querySelector('#currentImageInfo').style.display = 'none';
-    nextNavButton.style.display = 'none';
-    lastNavButton.style.display = 'none';
     for (let j = 1; j <= data.length; j++) {
-      document.querySelector('#image'+j).setAttribute('visible', 'true');
+      if (j != i) {
+        document.querySelector('#camera_'+j).setAttribute('active', 'false');
+        document.querySelector('#nextImage_'+j).style.display = 'none';
+        document.querySelector('#image'+j).setAttribute('visible', 'false');
+
+        document.querySelector('#lastImage_'+j).style.display = 'none';
+      }
     }
-  }
+
+
+    // Switch the boolean value to its opposite
+    if (navigation == false) {
+      RigCamera = RigCamera === 'true' ? 'false' : 'true';
+    }
+    imageCamActive = imageCamActive === 'true' ? 'false' : 'true';
+
+    if (imageCamActive == 'true') {
+      let infoBox = document.querySelector('#currentImageInfo');
+      
+      
+      document.querySelector('#image'+i).setAttribute('visible', 'true');
+      if (isImageInfoVisible){
+        infoBox.style.display = 'block';
+      }
+      infoBox.innerHTML = `
+        <h1>${data[i-1].title}</h1>
+        <h6>${data[i-1].artistName}</h6>
+        <p>${data[i-1].description}</p>
+      `;
+
+      infobutton.style.display = 'block';
+      nextNavButton.style.display = 'block';
+      lastNavButton.style.display = 'block';
+      
+    } else {
+      document.querySelector('#currentImageInfo').style.display = 'none';
+      nextNavButton.style.display = 'none';
+      lastNavButton.style.display = 'none';
+      infobutton.style.display = 'none';
+      for (let j = 1; j <= data.length; j++) {
+        document.querySelector('#image'+j).setAttribute('visible', 'true');
+      }
+    }
 
 
 
-  // Set the new value of the 'active' attribute
-  document.querySelector('#pawn').setAttribute('active', RigCamera);
-  document.querySelector('#camera_'+i).setAttribute('active', imageCamActive);
-  document.querySelector('#pawn').setAttribute('position', `${newPosition.x} 0 ${newPosition.z}`);
+    // Set the new value of the 'active' attribute
+    document.querySelector('#pawn').setAttribute('active', RigCamera);
+    document.querySelector('#camera_'+i).setAttribute('active', imageCamActive);
+    document.querySelector('#pawn').setAttribute('position', `${newPosition.x} 0 ${newPosition.z}`);
 
   // for (let j = 1; j <= data.length; j++) {
   //   console.log("camera_"+j, "active: ", document.querySelector('#camera_'+j).getAttribute('active'));
@@ -425,7 +428,7 @@ function handleImageClick(i, data, navigation = false) {
 }////////////////////////////////////////////////// handle image click ende ------------------------------------------------
 
 /////////////////////////////////////////////////// Wand erstellen /////////////////////////////////////////////////////////
-function createWallBehindImage(i, segmentSize, segmentHeight) {
+function createWallBehindImage(i, data, segmentSize, segmentHeight) {
   let newWall = document.createElement("a-box");
     newWall.setAttribute("id", "wall_" + i);
     newWall.setAttribute("class", "target");
@@ -438,6 +441,8 @@ function createWallBehindImage(i, segmentSize, segmentHeight) {
     newWall.setAttribute("shadow", "cast: false; receive: true");
     newWall.setAttribute("data-raycastable", true);
   document.getElementById("segment_" + i).appendChild(newWall);
+  
+  newWall.addEventListener('click', () => handleImageClick(i, data, false, true));
 }////////////////////////////////////////////////// Wand erstellen ende ----------------------------------------------------
 
 /////////////////////////////////////////////////// Boden und Decke erstellen //////////////////////////////////////////////
@@ -733,6 +738,18 @@ function connectingTheOverlays(expoOrganizerData , homePositionOfCamera, expoDat
   exitButton.addEventListener('click', () => {
     document.getElementById("pawn").setAttribute('wasd-controls', 'enabled: false');
     cameraEntity.setAttribute('position', homePositionOfCamera);
+  });
+
+  const infoButton = document.getElementById('info_icon');
+  infoButton.addEventListener('click', () => {
+    const infoBox = document.getElementById('currentImageInfo');
+    if (isImageInfoVisible){
+      infoBox.style.display = 'none';
+      isImageInfoVisible = false;
+    } else {
+      infoBox.style.display = 'block';
+      isImageInfoVisible = true;
+    }
   });
 
   if (expoOrganizerData[0].logo){
