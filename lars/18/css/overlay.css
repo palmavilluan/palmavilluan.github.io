@@ -84,6 +84,11 @@ a{
     justify-content: space-between;
     align-items: center;
   }
+.overlayIconContainer .overlayIconContainerEnd{
+    flex-shrink: 6;
+}
+
+  
 
 
 #overlayHeader {
@@ -348,7 +353,27 @@ a{
     cursor: pointer;
 }
 
-.raycast-ignore {
-    pointer-events: none;
-  }
-  
+
+#iconMask{
+    height: 6vh;
+    width: 6vh;
+    margin: 1vw;
+    border-radius: 3vh;
+    overflow: hidden;
+
+}
+
+#profilBild_icon {
+    object-fit: cover;
+    max-height: none;
+    width: 100%;
+    margin: 0;
+}
+
+#virtualExpo-logo{
+    height: 6vh;
+    width: 6vh;
+    margin: 1vw;
+    border-radius: 3vh;
+    overflow: hidden;
+}

@@ -67,7 +67,6 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
                                                 createWallBehindImage(i, data, segmentSize, segmentHeight);
                                                 createFloorAndRoof(i, segmentSize, segmentHeight, roomColor);
                                                 createWarpPoint(i, data, warpPointColor);
-                                                // createLabel(i, data, segmentSize, segmentHeight);
                                                 // createNavigationButtons(i, data);
   }
 
@@ -161,7 +160,7 @@ function getExpoHashFromURL() {
     // Wenn der Benutzer die Eingabe abbricht oder nichts eingibt
     if (userInput == null || userInput.trim() === "") {
       // Füge "?1" an die aktuelle URL an
-      window.location.href = url + '?red,blue';
+      window.location.href = url + '?beispielExpo'; 
     } else {
       // Wenn der Benutzer eine gültige Eingabe macht, aktualisiere die URL
       window.location.href = url + '?' + userInput;
@@ -251,8 +250,6 @@ function createSegment(i, data, positionX, rotationY, positionZ) {
 
 /////////////////////////////////////////////////// Bilder erstellen ///////////////////////////////////////////////////////
 function createImage(i, data, segmentSize, segmentHeight) {
-  console.log("data start for image ",i,": ", data);
-  console.log("segmentheight: ", segmentHeight);
   if (data[i - 1]){
     let image = new Image();
     image.onload = function () {
@@ -279,7 +276,7 @@ function createImage(i, data, segmentSize, segmentHeight) {
         newImg.setAttribute("shader", "flat");
         newImg.setAttribute("shadow", "cast: true; receive: false");
         newImg.setAttribute("data-raycastable", true);
-        console.log("newImg: ", i, newImg);
+        
       document.getElementById("segment_" + i).appendChild(newImg);
 
       //////////////////////////////////////////////// Bildkamera erstellen //////////////////////////////////////////////////
@@ -343,11 +340,12 @@ function createImage(i, data, segmentSize, segmentHeight) {
         }
       });
       
+    // createLabel(i, data, newImg);
     }
 
     image.src = data[i - 1].artworkURL;
   }
-  console.log("data end: ", data);
+  
 }////////////////////////////////////////////////// Bilder erstellen ende --------------------------------------------------
 
 /////////////////////////////////////////////////// handle image click /////////////////////////////////////////////////////
@@ -534,13 +532,14 @@ function createWarpPoint(i, data, warpPointColor) {
 }////////////////////////////////////////////////// WarpPoint erstellen ende -----------------------------------------------
 
 /////////////////////////////////////////////////// Label erstellen ////////////////////////////////////////////////////////
-function createLabel(i, data, segmentSize, segmentHeight) {     
-  if (data[i - 1]){                                                
+function createLabel(i, data, newImg) {     
+  if (data[i - 1]){
+    let imageWidth = newImg.getAttribute("width");
     let newTitle = document.createElement("a-entity");
+      newTitle.setAttribute("id", "title_" + i);
       newTitle.setAttribute("text", "value: " + data[i-1].title + "\n" + i + "; color: gray; width: 5; align: center;");
-      newTitle.setAttribute("position", `0 -${(segmentHeight/2)-.5} -${(segmentSize/2)-.01}`);
-    document.getElementById("segment_" + i).appendChild(newTitle);
-    return data;
+      newTitle.setAttribute("position", `${-imageWidth/2} 0 0`);
+    document.getElementById("image" + i).appendChild(newTitle);
   }
 }////////////////////////////////////////////////// Label erstellen ende ---------------------------------------------------
 
@@ -554,9 +553,9 @@ function createBasicRoomLight(segmentHeight, light) {
     document.getElementById("aScene").appendChild(newLight);
 
     let ambientLight = document.createElement("a-light");
-      ambientLight.setAttribute("type", "ambient"); 
+      ambientLight.setAttribute("light", "type: ambient; castShadow: true");
       ambientLight.setAttribute("color", "white");
-      ambientLight.setAttribute("intensity", "0.8");
+      ambientLight.setAttribute("intensity", "0.86");
     document.getElementById("aScene").appendChild(ambientLight);
 
     if (light == false) {
@@ -664,29 +663,25 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
     document.getElementById("corner_" + i).appendChild(secondCornerWall);
 
 
-
-
     let floorLightWidth = 0.5;
+
     let floorLight = document.createElement("a-entity");
       floorLight.setAttribute("id", "floorLight_" + i);
       floorLight.setAttribute("class", "floor-light");
-      floorLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; `);
-      floorLight.setAttribute("position", `${segmentSize/2} ${0.001-segmentHeight/2} ${-segmentSize/2}`);
+      floorLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize-floorLightWidth/2}; height: ${floorLightWidth}; color: white; `);
+      floorLight.setAttribute("position", `${segmentSize/2} ${0.001-segmentHeight/2} ${(floorLightWidth/2)-segmentSize/2}`);
       floorLight.setAttribute("rotation", `90 -90 0`);
     document.getElementById("corner_" + i).appendChild(floorLight);
 
     let roofLight = document.createElement("a-entity");
       roofLight.setAttribute("id", "roofLight_" + i);
       roofLight.setAttribute("class", "floor-light");
-      roofLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; `);
-      roofLight.setAttribute("position", `${segmentSize/2} ${-0.001+segmentHeight/2} ${-segmentSize/2}`);
-      roofLight.setAttribute("rotation", `-90 -90 0`);
+      roofLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize-floorLightWidth/2}; height: ${floorLightWidth}; color: white; `);
+      roofLight.setAttribute("position", `${segmentSize/2} ${-0.001+segmentHeight/2} ${(floorLightWidth/2)-segmentSize/2}`);
+      roofLight.setAttribute("rotation", `-90 -90 0`); 
     document.getElementById("corner_" + i).appendChild(roofLight);
 
-    if (light == false) {
-      floorLight.setAttribute("area-light", `intensity: 1; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth*2}; color: white; `);
-      roofLight.setAttribute("area-light", `intensity: 1; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth*2}; color: white; `);
-      }
+    
 
 
 
