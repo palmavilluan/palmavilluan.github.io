@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>virtualExpo</title>
+
+    <link rel="stylesheet" href="css/overlay.css">
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-area-light-component/dist/aframe-area-light-component.min.js"></script>
+</head>
+
+
+<body>
+
+    <!-- DIV virtualExpoFrame -->
+    <div id="virtualExpoFrame">
+
+
+
+    <!-- DIV overlayWrapper -->
+    <div id="overlayWrapper">
+
+       <!--  DIV overlayContainer -->
+        <div id="overlayContainer">
+
+            <!-- HEADER overlayHeader -->
+            <header id="overlayHeader">
+                
+                <div id="overlayHeaderIconWrapper" class="overlayIconWrapper">
+
+                    <div  class="overlayIconContainer overlayIconContainerStart" >
+                        
+                        <div id="iconMask">
+                            <img id="profilBild_icon" class="overlayIcon"  src="../00_media/04_svg/profilBild_icon.svg" alt="" >
+                        </div>
+
+                        <h2 id="expoTitle_text">
+                            <span id="expoName_text"></span>
+                            <span id="orgaName_text"></span>
+                            <span id="expoDate_text"></span> </h2>
+                        
+
+                    </div>
+
+                    <div  class="overlayIconContainer overlayIconContainerEnd">
+                        <img id="linkKopieren_icon" class="overlayIcon" src="../00_media/04_svg/linkKopieren_icon.svg" alt="" >
+                    </div>
+
+
+
+
+                </div>
+
+                <div id="overlayHeaderInfoWrapper" class="overlayInfoWrapper">
+                    <p id="overlayHeaderInfo" class="overlayInfo"></p>
+                </div>
+
+            </header> <!-- ENDE HEADER overlayHeader -->
+
+            <!-- MAIN overlayMain -->
+            <main id="overlayMain">
+
+                <div id="overlayMainIconWrapper" class="overlayIconWrapper">
+                   
+                    <div id="overlayMainIconContainer" class="overlayIconContainer">
+
+                        <img id="virtualExpo_icon" class="overlayIcon"  src="../00_media/04_svg/virtualExpo_icon_var2.svg" alt="">
+
+                    </div>
+
+                </div>
+                <div id="overlayMainInfoWrapper" class="overlayInfoWrapper">
+                    <p id="overlayMainInfo" class="overlayInfo"></p>
+                </div>
+                <div id="currentImageInfo">
+                    <h3 id="imageTitle"></h3>
+                    <p id="imageDescription">Beschreibung des Bildes</p>
+                    <!-- Weitere Informationen wie Künstler, Jahr, etc. können hier hinzugefügt werden -->
+                </div>
+                <!-- <div id="help">
+                    <h3 id="helpTitle">Virtual Expo Guide</h3>
+                    <p id="helpDescription">Hier finden Sie Hilfe zur steuerung im virtuellen Raum <br>Später kommt hier dann noch mehr Hilfe</p>
+                </div> -->
+                <div id="help">
+                    <h3 id="helpTitle">Virtual Expo Guide</h3>
+                    <p id="helpDescription">
+                        Willkommen zur Virtual Expo! Hier sind einige Tipps, um Ihre Erfahrung zu verbessern:
+                    </p>
+                    <ul id="helpList">
+                        <li><strong>Navigieren:</strong> Benutzen Sie die W,A,S,D-Tasten oder die Pfeiltasten, um sich im Raum zu bewegen.</li>
+                        <li><strong>Blickrichtung ändern:</strong> Bewegen Sie wären einem Klick die Maus, um in verschiedene Richtungen zu blicken.</li>
+                        <li><strong>Interaktion:</strong> Klicken Sie auf ein Bild, um mehr Informationen zu erhalten.</li>
+                        <li><strong>Info:</strong> Sie mit dem Info Symbol weitere Informationen einblenden lassen wärend Sie im Fokusmodus auf ein Bild schauen</li>
+                    </ul>
+                    <p id="enjoyMessage">Genießen Sie Ihren Besuch in unserer Virtual Expo!</p>
+                </div>
+
+                <div id="einstellungen">
+                    <div class="einstellungen-content">
+                        <h2>Select Options</h2>
+                        <form id="checkboxForm">
+                            <label><input type="checkbox" name="light" value="lightoff">Licht aus</label><br>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                
+                
+                
+
+            </main> <!-- ENDE MAIN overlayMain -->
+
+
+            <!-- FOOTER overlayFooter -->
+            <footer id="overlayFooter">
+                
+                <div id="overlayFooterInfoWrapper" class="overlayInfoWrapper">
+                    <p id="overlayFooterInfo" class="overlayInfo"></p>
+                </div>
+
+                <div id="overlayFooterIconWrapper" class="overlayIconWrapper">
+
+                    <div  class="overlayIconContainer overlayIconContainerStart" > 
+
+                        <img id="exit_icon" class="overlayIcon"  src="../00_media/04_svg/exit_icon.svg" alt="" >
+                        <img id="home_icon" class="overlayIcon"  src="../00_media/04_svg/home_icon.svg" alt="">
+                        <img id="guide_icon" class="overlayIcon"  src="../00_media/04_svg/guide_icon.svg" alt="">
+                        <img id="settings_icon" class="overlayIcon"  src="../00_media/04_svg/settings_icon.svg" alt="">
+                        <img id="info_icon" class="overlayIcon"  src="../00_media/04_svg/info_icon.svg" alt="">
+                        
+
+                    </div>
+
+                    <div  class="overlayIconContainer overlayIconContainerEnd">
+                        
+                        <img id="virtualExpo_logo" class="overlayIcon" src="../00_media/04_svg/virtualExpo_logo.svg" alt="">
+                        <img id="toggleScreen_icon" class="overlayIcon" src="../00_media/04_svg/smallScreen_icon.svg" alt="">
+                    </div>
+
+
+                </div>
+
+            </footer> <!-- ENDE FOOTER overlayFooter -->
+
+
+        </div> <!-- ENDE DIV overlayContainer -->
+
+
+
+        
+
+
+    </div> <!-- ENDE DIV overlayWrapper -->
+
+    <!-- DIV expoWrapper -->
+    <div id="expoWrapper">
+        <a-scene id="aScene" shadow="type: pcfsoft"  vr-mode-ui="enabled: false" embedded>
+            <!-- <a-assets>
+                <img id="sky" src="00_media/01_img/sky.jpg">
+            </a-assets> -->
+            <a-sky color="#202020"></a-sky>
+
+            
+            <a-entity id="Rig" position="0 1.6 0" >
+              <a-camera cursor="rayOrigin: mouse" raycaster="objects: .target;" id="pawn" position="0 0 0" wasd-controls="enabled:false" active="true" check-coordinates>
+                <a-cursor  far="0.0001" visible="false"></a-cursor>
+              </a-camera>
+            </a-entity>
+        </a-scene>
+
+
+    </div><!-- ENDE DIV expoWrapper -->
+
+
+</div> <!-- ENDE DIV virtualExpoFrame -->
+
+
+
+<!-- import javascript -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"> </script>
+
+<!-- <script type="module"  src="js/overlay.js"></script> -->
+<script type="module"  src="js/setup_supabase.js"></script>
+<script type="module"  src="js/aframe.js"></script>
+
+
+    
+</body>
+</html>
+
