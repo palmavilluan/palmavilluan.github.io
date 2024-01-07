@@ -84,6 +84,11 @@ a{
     justify-content: space-between;
     align-items: center;
   }
+.overlayIconContainer .overlayIconContainerEnd{
+    flex-shrink: 6;
+}
+
+  
 
 
 #overlayHeader {
@@ -341,4 +346,34 @@ a{
     color: #333; /* Dark grey text for readability */
     max-width: 80vw; /* Limit the width of the div */
     min-width: 50vw;
+}
+
+#info_icon{
+    display: none;
+    cursor: pointer;
+}
+
+
+#iconMask{
+    height: 6vh;
+    width: 6vh;
+    margin: 1vw;
+    border-radius: 3vh;
+    overflow: hidden;
+
+}
+
+#profilBild_icon {
+    object-fit: cover;
+    max-height: none;
+    width: 100%;
+    margin: 0;
+}
+
+#virtualExpo-logo{
+    height: 6vh;
+    width: 6vh;
+    margin: 1vw;
+    border-radius: 3vh;
+    overflow: hidden;
 }

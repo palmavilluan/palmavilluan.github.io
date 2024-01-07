@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vE: Overlay</title>
+    <title>virtualExpo</title>
 
     <link rel="stylesheet" href="css/overlay.css">
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
@@ -30,8 +30,11 @@
                 
                 <div id="overlayHeaderIconWrapper" class="overlayIconWrapper">
 
-                    <div  class="overlayIconContainer overlayIconContainerStart" > 
-                        <img id="profilBild_icon" class="overlayIcon"  src="../00_media/04_svg/profilBild_icon.svg" alt="" >
+                    <div  class="overlayIconContainer overlayIconContainerStart" >
+                        
+                        <div id="iconMask">
+                            <img id="profilBild_icon" class="overlayIcon"  src="../00_media/04_svg/profilBild_icon.svg" alt="" >
+                        </div>
 
                         <h2 id="expoTitle_text">
                             <span id="expoName_text"></span>
@@ -51,7 +54,7 @@
                 </div>
 
                 <div id="overlayHeaderInfoWrapper" class="overlayInfoWrapper">
-                    <p id="overlayHeaderInfo" class="overlayInfo">Info</p>
+                    <p id="overlayHeaderInfo" class="overlayInfo"></p>
                 </div>
 
             </header> <!-- ENDE HEADER overlayHeader -->
@@ -62,12 +65,14 @@
                 <div id="overlayMainIconWrapper" class="overlayIconWrapper">
                    
                     <div id="overlayMainIconContainer" class="overlayIconContainer">
-                        <img id="virtualExpo_icon" class="overlayIcon"  src="../00_media/04_svg/virtualExpo_icon_var2.svg" alt="" >
+
+                        <img id="virtualExpo_icon" class="overlayIcon"  src="../00_media/04_svg/virtualExpo_icon_var2.svg" alt="">
+
                     </div>
 
                 </div>
                 <div id="overlayMainInfoWrapper" class="overlayInfoWrapper">
-                    <p id="overlayMainInfo" class="overlayInfo">Info</p>
+                    <p id="overlayMainInfo" class="overlayInfo"></p>
                 </div>
                 <div id="currentImageInfo">
                     <h3 id="imageTitle"></h3>
@@ -112,7 +117,7 @@
             <footer id="overlayFooter">
                 
                 <div id="overlayFooterInfoWrapper" class="overlayInfoWrapper">
-                    <p id="overlayFooterInfo" class="overlayInfo">Info</p>
+                    <p id="overlayFooterInfo" class="overlayInfo"></p>
                 </div>
 
                 <div id="overlayFooterIconWrapper" class="overlayIconWrapper">
@@ -123,6 +128,7 @@
                         <img id="home_icon" class="overlayIcon"  src="../00_media/04_svg/home_icon.svg" alt="">
                         <img id="guide_icon" class="overlayIcon"  src="../00_media/04_svg/guide_icon.svg" alt="">
                         <img id="settings_icon" class="overlayIcon"  src="../00_media/04_svg/settings_icon.svg" alt="">
+                        <img id="info_icon" class="overlayIcon"  src="../00_media/04_svg/info_icon.svg" alt="">
                         
 
                     </div>

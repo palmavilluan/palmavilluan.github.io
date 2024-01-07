@@ -142,6 +142,8 @@ if (currentView == "expoView"){
         expoViewIconArray[i].style.display = "flex";
     }
 
+    document.querySelector("#info_icon").style.display = "none";
+
     virtualExpo_icon.style.display = "none";
 
     setPointerEvents();

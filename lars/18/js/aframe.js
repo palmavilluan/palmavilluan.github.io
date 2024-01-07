@@ -17,7 +17,7 @@ const homePositionOfCamera = "0 0 0";
 
 let bigdata = {};
 
-
+let isImageInfoVisible = false;
 
 
 
@@ -64,10 +64,9 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
     const { positionX, rotationY, positionZ } = createRotationAndPosition(i, numberOfElements, anzahlBilderProWand, segmentSize, halfRoomSize);
                                          data = createSegment(i, data, positionX, rotationY, positionZ);
                                                 createImage(i, data, segmentSize, segmentHeight);
-                                                createWallBehindImage(i, segmentSize, segmentHeight);
+                                                createWallBehindImage(i, data, segmentSize, segmentHeight);
                                                 createFloorAndRoof(i, segmentSize, segmentHeight, roomColor);
                                                 createWarpPoint(i, data, warpPointColor);
-                                                // createLabel(i, data, segmentSize, segmentHeight);
                                                 // createNavigationButtons(i, data);
   }
 
@@ -78,7 +77,7 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   createBasicRoomLight(segmentHeight, light);
   finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomColor, light);
 
-  connectingTheOverlays(expoOrganizerData , homePositionOfCamera);
+  connectingTheOverlays(expoOrganizerData , homePositionOfCamera, expoData);
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////// Calling the Js file for styling overlay ////////////////////////////////////////////
@@ -161,7 +160,7 @@ function getExpoHashFromURL() {
     // Wenn der Benutzer die Eingabe abbricht oder nichts eingibt
     if (userInput == null || userInput.trim() === "") {
       // Füge "?1" an die aktuelle URL an
-      window.location.href = url + '?red,blue';
+      window.location.href = url + '?beispielExpo'; 
     } else {
       // Wenn der Benutzer eine gültige Eingabe macht, aktualisiere die URL
       window.location.href = url + '?' + userInput;
@@ -251,186 +250,174 @@ function createSegment(i, data, positionX, rotationY, positionZ) {
 
 /////////////////////////////////////////////////// Bilder erstellen ///////////////////////////////////////////////////////
 function createImage(i, data, segmentSize, segmentHeight) {
-
   if (data[i - 1]){
     let image = new Image();
-    image.src = data[i - 1].artworkURL;
-    let ratio = image.width / image.height;
+    image.onload = function () {
+      let ratio = image.width / image.height;
 
-    let newImg = document.createElement("a-box");
-      newImg.setAttribute("src", image.src);
-      newImg.setAttribute("id", "image" + i);
-      newImg.setAttribute("rotation", `0 0 0`);
-      newImg.setAttribute("class", "image target");
-      
-      if (image.height > image.width) { //hochformat
-        newImg.setAttribute("position", `0 0 -${(segmentSize / 2) - 0.03}`);
-        newImg.setAttribute("width", (segmentHeight/1.5)*ratio);
-        newImg.setAttribute("height", segmentHeight/1.5);
-      }
-      else {                            //querformat
-        newImg.setAttribute("position", `0 0 -${(segmentSize / 2) - 0.03}`);
-        newImg.setAttribute("width", (segmentSize*0.8));
-        newImg.setAttribute("height", (segmentSize*0.8)/ratio);
-      }
-      newImg.setAttribute("depth", "0.001");
-      newImg.setAttribute("shader", "flat");
-      newImg.setAttribute("shadow", "cast: true; receive: false");
-      newImg.setAttribute("data-raycastable", true);
-      // newImg.addEventListener('click', function() {
-      //   // Get the current value of the 'active' attribute
-      //   let RigCamera = document.querySelector('#pawn').getAttribute('active');
-      //   let imageCamActive = document.querySelector('#camera_'+i).getAttribute('active');
-      //   let newPosition = document.querySelector('#segment_'+i).getAttribute('position');
-      
-      //   // Switch the boolean value to its opposite
-      //   RigCamera = RigCamera === 'true' ? 'false' : 'true';
-      //   imageCamActive = imageCamActive === 'true' ? 'false' : 'true';
-
-      //   console.log("this: ", this, '\n', "RigCamera: ", RigCamera, '\n', "imageCamActive: ", imageCamActive, '\n', "newPosition: ", newPosition);
+      let newImg = document.createElement("a-box");
+        newImg.setAttribute("material", `src: ${image.src}`);
+        // newImg.setAttribute("src", image.src);
+        newImg.setAttribute("id", "image" + i);
+        newImg.setAttribute("rotation", `0 0 0`);
+        newImg.setAttribute("class", "image target");
         
-      //   if (imageCamActive == 'true') {
-      //     let infoBox = document.querySelector('#currentImageInfo');
-      //     infoBox.style.display = 'block';
-      //     infoBox.innerHTML = `
-      //       <h1>${data[i-1].title}</h1>
-      //       <h6>${data[i-1].artistName}</h6>
-      //       <p>${data[i-1].description}</p>
-      //     `;
+        if (image.height > image.width) { //hochformat
+          newImg.setAttribute("position", `0 0 -${(segmentSize / 2) - 0.03}`);
+          newImg.setAttribute("width", (segmentHeight/1.5)*ratio);
+          newImg.setAttribute("height", segmentHeight/1.5);
+        }
+        else {                            //querformat
+          newImg.setAttribute("position", `0 0 -${(segmentSize / 2) - 0.03}`);
+          newImg.setAttribute("width", (segmentSize*0.8));
+          newImg.setAttribute("height", (segmentSize*0.8)/ratio);
+        }
+        newImg.setAttribute("depth", "0.001");
+        newImg.setAttribute("shader", "flat");
+        newImg.setAttribute("shadow", "cast: true; receive: false");
+        newImg.setAttribute("data-raycastable", true);
+        
+      document.getElementById("segment_" + i).appendChild(newImg);
 
-      //   } else {
-      //     document.querySelector('#currentImageInfo').style.display = 'none';
-      //   }
-      
-      //   // Set the new value of the 'active' attribute
-      //   document.querySelector('#pawn').setAttribute('active', RigCamera);
-      //   document.querySelector('#camera_'+i).setAttribute('active', imageCamActive);
-      //   document.querySelector('#pawn').setAttribute('position', `${newPosition.x} 0 ${newPosition.z}`);
-      
-      // });
-    document.getElementById("segment_" + i).appendChild(newImg);
-
-    //////////////////////////////////////////////// Bildkamera erstellen //////////////////////////////////////////////////
-    let newCamera = document.createElement("a-camera");
-      newCamera.setAttribute("id", "camera_" + i);
-      newCamera.setAttribute("position", `0 0 0.5`);
-      newCamera.setAttribute("rotation", `0 0 0`);
-      newCamera.setAttribute("active", "false");
-      newCamera.setAttribute("fov", "145");
-      newCamera.setAttribute("raycaster", "objects: .target;");
-      newCamera.setAttribute("wasd-controls", "enabled: false");
-      newCamera.setAttribute("look-controls", "enabled: false");
-      newCamera.setAttribute("cursor", "rayOrigin: mouse; fuse: false;");
-    document.getElementById("image" + i).appendChild(newCamera);
-    //////////////////////////////////////////////// Bildkamera erstellen ende ---------------------------------------------
+      //////////////////////////////////////////////// Bildkamera erstellen //////////////////////////////////////////////////
+      let newCamera = document.createElement("a-camera");
+        newCamera.setAttribute("id", "camera_" + i);
+        newCamera.setAttribute("position", `0 0 0.5`);
+        newCamera.setAttribute("rotation", `0 0 0`);
+        newCamera.setAttribute("active", "false");
+        newCamera.setAttribute("fov", "145");
+        newCamera.setAttribute("raycaster", "objects: .target;");
+        newCamera.setAttribute("wasd-controls", "enabled: false");
+        newCamera.setAttribute("look-controls", "enabled: false");
+        newCamera.setAttribute("cursor", "rayOrigin: mouse; fuse: false;");
+      document.getElementById("image" + i).appendChild(newCamera);
+      //////////////////////////////////////////////// Bildkamera erstellen ende ---------------------------------------------
 
 
-    let nextButton = document.createElement("img");
-      nextButton.setAttribute("id", "nextImage_"+i);
-      nextButton.setAttribute("class", "arrow");
-      nextButton.setAttribute("title", "To the next image");
-      nextButton.setAttribute("style", "display: none;");
-      nextButton.setAttribute("style", "pointer-events: auto;");
-      nextButton.setAttribute("src", "../00_media/04_svg/right_icon.svg");
-      nextButton.addEventListener('mouseenter', () => {
-        nextButton.style.opacity = "0.5";
+      let nextButton = document.createElement("img");
+        nextButton.setAttribute("id", "nextImage_"+i);
+        nextButton.setAttribute("class", "arrow");
+        nextButton.setAttribute("title", "To the next image");
+        nextButton.setAttribute("style", "display: none;");
+        nextButton.setAttribute("style", "pointer-events: auto;");
+        nextButton.setAttribute("src", "../00_media/04_svg/right_icon.svg");
+        nextButton.addEventListener('mouseenter', () => {
+          nextButton.style.opacity = "0.5";
+        });
+        
+        // Mouse leaves the element
+        nextButton.addEventListener('mouseleave', () => {
+          nextButton.style.opacity = "1";
+        });
+
+
+
+      document.getElementById("overlayMain").appendChild(nextButton);
+
+      let lastButton = document.createElement("img");
+        lastButton.setAttribute("id", "lastImage_"+i);
+        lastButton.setAttribute("class", "arrow left");
+        lastButton.setAttribute("title", "To the next image");
+        lastButton.setAttribute("style", "display: none; pointer-events: auto; opacity: 1;");
+        // lastButton.setAttribute("style", "right: auto; left: 0;");
+        // lastButton.setAttribute("style", "pointer-events: auto;");
+        lastButton.setAttribute("src", "../00_media/04_svg/right_icon.svg");
+        lastButton.addEventListener('mouseenter', () => {
+          lastButton.style.opacity = "0.5";
+        });
+        
+        // Mouse leaves the element
+        lastButton.addEventListener('mouseleave', () => {
+          lastButton.style.opacity = "1";
+        });
+      document.getElementById("overlayMain").appendChild(lastButton);
+
+      lastButton.addEventListener('click', () => handleImageClick(i + 1, data, true));
+      nextButton.addEventListener('click', () => handleImageClick(i - 1, data, true));
+      newImg.addEventListener('click', (event) => {
+        if (event.target === newImg) {
+          handleImageClick(i, data);
+        }
       });
       
-      // Mouse leaves the element
-      nextButton.addEventListener('mouseleave', () => {
-        nextButton.style.opacity = "1";
-      });
+    // createLabel(i, data, newImg);
+    }
 
-
-
-    document.getElementById("overlayMain").appendChild(nextButton);
-
-    let lastButton = document.createElement("img");
-      lastButton.setAttribute("id", "lastImage_"+i);
-      lastButton.setAttribute("class", "arrow left");
-      lastButton.setAttribute("title", "To the next image");
-      lastButton.setAttribute("style", "display: none; pointer-events: auto; opacity: 1;");
-      // lastButton.setAttribute("style", "right: auto; left: 0;");
-      // lastButton.setAttribute("style", "pointer-events: auto;");
-      lastButton.setAttribute("src", "../00_media/04_svg/right_icon.svg");
-      lastButton.addEventListener('mouseenter', () => {
-        lastButton.style.opacity = "0.5";
-      });
-      
-      // Mouse leaves the element
-      lastButton.addEventListener('mouseleave', () => {
-        lastButton.style.opacity = "1";
-      });
-    document.getElementById("overlayMain").appendChild(lastButton);
-
-    lastButton.addEventListener('click', () => handleImageClick(i + 1, data, true));
-    nextButton.addEventListener('click', () => handleImageClick(i - 1, data, true));
-    newImg.addEventListener('click', () => handleImageClick(i, data));
+    image.src = data[i - 1].artworkURL;
   }
-
+  
 }////////////////////////////////////////////////// Bilder erstellen ende --------------------------------------------------
 
 /////////////////////////////////////////////////// handle image click /////////////////////////////////////////////////////
-function handleImageClick(i, data, navigation = false) {
+function handleImageClick(i, data, navigation = false, out = false) {
   if (i == 0) {
     i = data.length;
   } else if (i == data.length + 1) {
     i = 1;
   }
+
   // Get the current value of the 'active' attribute
   let RigCamera = document.querySelector('#pawn').getAttribute('active');
   let imageCamActive = document.querySelector('#camera_'+i).getAttribute('active');
   let newPosition = document.querySelector('#segment_'+i).getAttribute('position');
+  let infobutton = document.querySelector('#info_icon');
   
   let lastNavButton = document.querySelector('#lastImage_'+i);
   let nextNavButton = document.querySelector('#nextImage_'+i);
 
-  for (let j = 1; j <= data.length; j++) {
-    if (j != i) {
-      document.querySelector('#camera_'+j).setAttribute('active', 'false');
-      document.querySelector('#nextImage_'+j).style.display = 'none';
-      document.querySelector('#image'+j).setAttribute('visible', 'false');
-      document.querySelector('#lastImage_'+j).style.display = 'none';
-    }
-  }
 
 
-  // Switch the boolean value to its opposite
-  if (navigation == false) {
-    RigCamera = RigCamera === 'true' ? 'false' : 'true';
-  }
-  imageCamActive = imageCamActive === 'true' ? 'false' : 'true';
-
-  if (imageCamActive == 'true') {
-    let infoBox = document.querySelector('#currentImageInfo');
-    
-    document.querySelector('#image'+i).setAttribute('visible', 'true');
-    infoBox.style.display = 'block';
-
-    infoBox.innerHTML = `
-      <h1>${data[i-1].title}</h1>
-      <h6>${data[i-1].artistName}</h6>
-      <p>${data[i-1].description}</p>
-    `;
-  
-    nextNavButton.style.display = 'block';
-    lastNavButton.style.display = 'block';
-    
-  } else {
-    document.querySelector('#currentImageInfo').style.display = 'none';
-    nextNavButton.style.display = 'none';
-    lastNavButton.style.display = 'none';
     for (let j = 1; j <= data.length; j++) {
-      document.querySelector('#image'+j).setAttribute('visible', 'true');
+      if (j != i) {
+        document.querySelector('#camera_'+j).setAttribute('active', 'false');
+        document.querySelector('#nextImage_'+j).style.display = 'none';
+        document.querySelector('#image'+j).setAttribute('visible', 'false');
+
+        document.querySelector('#lastImage_'+j).style.display = 'none';
+      }
     }
-  }
+
+
+    // Switch the boolean value to its opposite
+    if (navigation == false) {
+      RigCamera = RigCamera === 'true' ? 'false' : 'true';
+    }
+    imageCamActive = imageCamActive === 'true' ? 'false' : 'true';
+
+    if (imageCamActive == 'true') {
+      let infoBox = document.querySelector('#currentImageInfo');
+      
+      
+      document.querySelector('#image'+i).setAttribute('visible', 'true');
+      if (isImageInfoVisible){
+        infoBox.style.display = 'block';
+      }
+      infoBox.innerHTML = `
+        <h1>${data[i-1].title}</h1>
+        <h6>${data[i-1].artistName}</h6>
+        <p>${data[i-1].description}</p>
+      `;
+
+      infobutton.style.display = 'block';
+      nextNavButton.style.display = 'block';
+      lastNavButton.style.display = 'block';
+      
+    } else {
+      document.querySelector('#currentImageInfo').style.display = 'none';
+      nextNavButton.style.display = 'none';
+      lastNavButton.style.display = 'none';
+      infobutton.style.display = 'none';
+      for (let j = 1; j <= data.length; j++) {
+        document.querySelector('#image'+j).setAttribute('visible', 'true');
+      }
+    }
 
 
 
-  // Set the new value of the 'active' attribute
-  document.querySelector('#pawn').setAttribute('active', RigCamera);
-  document.querySelector('#camera_'+i).setAttribute('active', imageCamActive);
-  document.querySelector('#pawn').setAttribute('position', `${newPosition.x} 0 ${newPosition.z}`);
+    // Set the new value of the 'active' attribute
+    document.querySelector('#pawn').setAttribute('active', RigCamera);
+    document.querySelector('#camera_'+i).setAttribute('active', imageCamActive);
+    document.querySelector('#pawn').setAttribute('position', `${newPosition.x} 0 ${newPosition.z}`);
 
   // for (let j = 1; j <= data.length; j++) {
   //   console.log("camera_"+j, "active: ", document.querySelector('#camera_'+j).getAttribute('active'));
@@ -439,7 +426,7 @@ function handleImageClick(i, data, navigation = false) {
 }////////////////////////////////////////////////// handle image click ende ------------------------------------------------
 
 /////////////////////////////////////////////////// Wand erstellen /////////////////////////////////////////////////////////
-function createWallBehindImage(i, segmentSize, segmentHeight) {
+function createWallBehindImage(i, data, segmentSize, segmentHeight) {
   let newWall = document.createElement("a-box");
     newWall.setAttribute("id", "wall_" + i);
     newWall.setAttribute("class", "target");
@@ -452,6 +439,8 @@ function createWallBehindImage(i, segmentSize, segmentHeight) {
     newWall.setAttribute("shadow", "cast: false; receive: true");
     newWall.setAttribute("data-raycastable", true);
   document.getElementById("segment_" + i).appendChild(newWall);
+  
+  newWall.addEventListener('click', () => handleImageClick(i, data, false, true));
 }////////////////////////////////////////////////// Wand erstellen ende ----------------------------------------------------
 
 /////////////////////////////////////////////////// Boden und Decke erstellen //////////////////////////////////////////////
@@ -543,13 +532,14 @@ function createWarpPoint(i, data, warpPointColor) {
 }////////////////////////////////////////////////// WarpPoint erstellen ende -----------------------------------------------
 
 /////////////////////////////////////////////////// Label erstellen ////////////////////////////////////////////////////////
-function createLabel(i, data, segmentSize, segmentHeight) {     
-  if (data[i - 1]){                                                
+function createLabel(i, data, newImg) {     
+  if (data[i - 1]){
+    let imageWidth = newImg.getAttribute("width");
     let newTitle = document.createElement("a-entity");
+      newTitle.setAttribute("id", "title_" + i);
       newTitle.setAttribute("text", "value: " + data[i-1].title + "\n" + i + "; color: gray; width: 5; align: center;");
-      newTitle.setAttribute("position", `0 -${(segmentHeight/2)-.5} -${(segmentSize/2)-.01}`);
-    document.getElementById("segment_" + i).appendChild(newTitle);
-    return data;
+      newTitle.setAttribute("position", `${-imageWidth/2} 0 0`);
+    document.getElementById("image" + i).appendChild(newTitle);
   }
 }////////////////////////////////////////////////// Label erstellen ende ---------------------------------------------------
 
@@ -563,9 +553,9 @@ function createBasicRoomLight(segmentHeight, light) {
     document.getElementById("aScene").appendChild(newLight);
 
     let ambientLight = document.createElement("a-light");
-      ambientLight.setAttribute("type", "ambient"); 
+      ambientLight.setAttribute("light", "type: ambient; castShadow: true");
       ambientLight.setAttribute("color", "white");
-      ambientLight.setAttribute("intensity", "0.8");
+      ambientLight.setAttribute("intensity", "0.86");
     document.getElementById("aScene").appendChild(ambientLight);
 
     if (light == false) {
@@ -673,29 +663,25 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
     document.getElementById("corner_" + i).appendChild(secondCornerWall);
 
 
-
-
     let floorLightWidth = 0.5;
+
     let floorLight = document.createElement("a-entity");
       floorLight.setAttribute("id", "floorLight_" + i);
       floorLight.setAttribute("class", "floor-light");
-      floorLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; `);
-      floorLight.setAttribute("position", `${segmentSize/2} ${0.001-segmentHeight/2} ${-segmentSize/2}`);
+      floorLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize-floorLightWidth/2}; height: ${floorLightWidth}; color: white; `);
+      floorLight.setAttribute("position", `${segmentSize/2} ${0.001-segmentHeight/2} ${(floorLightWidth/2)-segmentSize/2}`);
       floorLight.setAttribute("rotation", `90 -90 0`);
     document.getElementById("corner_" + i).appendChild(floorLight);
 
     let roofLight = document.createElement("a-entity");
       roofLight.setAttribute("id", "roofLight_" + i);
       roofLight.setAttribute("class", "floor-light");
-      roofLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth}; color: white; `);
-      roofLight.setAttribute("position", `${segmentSize/2} ${-0.001+segmentHeight/2} ${-segmentSize/2}`);
-      roofLight.setAttribute("rotation", `-90 -90 0`);
+      roofLight.setAttribute("area-light", `intensity: 0.6; width: ${roomSize+2*segmentSize-floorLightWidth/2}; height: ${floorLightWidth}; color: white; `);
+      roofLight.setAttribute("position", `${segmentSize/2} ${-0.001+segmentHeight/2} ${(floorLightWidth/2)-segmentSize/2}`);
+      roofLight.setAttribute("rotation", `-90 -90 0`); 
     document.getElementById("corner_" + i).appendChild(roofLight);
 
-    if (light == false) {
-      floorLight.setAttribute("area-light", `intensity: 1; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth*2}; color: white; `);
-      roofLight.setAttribute("area-light", `intensity: 1; width: ${roomSize+2*segmentSize}; height: ${floorLightWidth*2}; color: white; `);
-      }
+    
 
 
 
@@ -726,7 +712,7 @@ function finishTheRoom(roomSize, segmentHeight, halfRoomSize, segmentSize, roomC
 }////////////////////////////////////////////////// finish the room ende ---------------------------------------------------
 
 /////////////////////////////////////////////////// connecting the overlay /////////////////////////////////////////////////
-function connectingTheOverlays(expoOrganizerData , homePositionOfCamera) {
+function connectingTheOverlays(expoOrganizerData , homePositionOfCamera, expoData) {
   // create home button 
   const homeButton = document.getElementById('home_icon');
   const cameraEntity = document.getElementById('pawn'); // Die ID Ihrer Kamera-Entity
@@ -749,9 +735,23 @@ function connectingTheOverlays(expoOrganizerData , homePositionOfCamera) {
     cameraEntity.setAttribute('position', homePositionOfCamera);
   });
 
+  const infoButton = document.getElementById('info_icon');
+  infoButton.addEventListener('click', () => {
+    const infoBox = document.getElementById('currentImageInfo');
+    if (isImageInfoVisible){
+      infoBox.style.display = 'none';
+      isImageInfoVisible = false;
+    } else {
+      infoBox.style.display = 'block';
+      isImageInfoVisible = true;
+    }
+  });
+
   if (expoOrganizerData[0].logo){
     document.getElementById('profilBild_icon').setAttribute('src', expoOrganizerData[0].logo);
   }
+
+  document.title = "vE: " + expoData[0].expoName;
   // create exit button ende
 }////////////////////////////////////////////////// connecting the overlay ende -------------------------------------------- 
 
