@@ -117,16 +117,12 @@ getObjectDashboard_seq();
 
                     console.log("orgaObject: ", orgaObject);
 
-                    let imgOrgaLogo = document.createElement("img");
+                    let imgOrgaLogo = document.querySelector("#imgOrgaLogo");
 
                     imgOrgaLogo.src = orgaObject.logo;
 
-                    imgOrgaLogo.id = "imgOrgaLogo";
 
-                    let containerOrgaLogo = document.getElementById("containerOrgaLogo");
-
-                    containerOrgaLogo.appendChild(imgOrgaLogo);
-
+            
 
                 }
  

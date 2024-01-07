@@ -25,7 +25,7 @@ let newExpo;
 let newExpoHash;
 let newExpoURL;
 
-let defaultExpoName = "untitled";
+let defaultExpoName = "unnamedExpo";
 let defaultExpoStart = new Date().toISOString().slice(0, 10);
 let defaultExpoEnd = new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().slice(0, 10);
 
@@ -39,7 +39,7 @@ let currentArrayArtworkExpo;
 
 
 
-let visitURL = "https://palmavilluan.github.io/" + "/virtualExpo/visit" +"/?";
+let visitURL = "https://palmavilluan.github.io" + "/virtualExpo/visit" +"/?";
 
 
 
@@ -135,6 +135,8 @@ async function edit_expo_seq() {
     eventButtonSaveExpo();
 
     eventButtonCreateExpo();
+
+    eventButtonDeleteExpo();
 
     eventInputExpoName();
     eventInputExpoStart();
@@ -496,6 +498,96 @@ async function edit_expo_seq() {
 
             }//ENDE FUNKTION eventInputExpoLink()
 
+            //FUNKTION eventButtonDeleteExpo()
+            function eventButtonDeleteExpo(){
+
+                console.log("functionExecuted: eventButtonDeleteExpo()");
+
+                buttonDeleteExpo.addEventListener("click", async function(){
+
+                    console.log("elementClicked: buttonDeleteExpo");
+
+                    /* let selectedExpoID = await loadFromLocalStorage("selectedExpoID");
+                    //console.log("selectedExpoID: ", selectedExpoID);
+
+                    let dashboardObject_original = await loadFromLocalStorage("dashboardObject_original");
+                    //console.log("dashboardObject_original: ", dashboardObject_original);
+
+                    let arrayExpo = dashboardObject_original.arrayExpo;
+                    //console.log("arrayExpo: ", arrayExpo);
+
+                    let selectedExpo = arrayExpo.find(expo => expo.id == selectedExpoID);
+                    //console.log("selectedExpo: ", selectedExpo);
+
+                    let selectedExpoName = selectedExpo.expoName;
+                    //console.log("selectedExpoName: ", selectedExpoName); */
+
+                    let selectedExpoName = inputExpoName.value;
+
+
+                    //open window to confirm delete
+                    let confirmDelete = confirm("sure you want to delete the Expo: " + selectedExpoName + "?");
+                    if (confirmDelete == true) {
+
+                        console.log("confirmDelete: ", confirmDelete);
+
+                        deleteExpo();
+
+                        buttonCreateExpo.style.display = "none";
+                        buttonEditExpo.style.display = "block";
+                        buttonSaveExpo.style.display = "none";
+
+                    } else {
+
+                        console.log("confirmDelete: ", confirmDelete);
+
+                    }
+
+                    
+
+                })
+
+            }//ENDE FUNKTION eventButtonDeleteExpo()
+
+            //FUNKTION deleteExpo()
+            async function deleteExpo(){
+
+                console.log("functionExecuted: deleteExpo()");
+
+                selectedExpoID = await loadFromLocalStorage("selectedExpoID");
+
+                console.log("selectedExpoID: ", selectedExpoID);
+
+                let { data, error } = await supa
+                .from('Exposition')
+                .delete()
+                .eq('id', selectedExpoID)
+
+                if (error) {
+                    console.log("error: ", error);
+
+                }
+
+                console.log("data: ", data);
+
+                //delete selectedExpoID in local storage
+
+                
+
+                disablePointerEvents(infoExpo);
+
+                //delete selectedExpoID in local storage
+
+                localStorage.removeItem("selectedExpoID");
+                localStorage.removeItem("selectedArtworkID");
+
+                //reload page
+                location.reload();
+
+
+
+            }//ENDE FUNKTION deleteExpo()
+
 //ENDEN BEREICH edit_expo_seq---------------------------------------------------------------------------------------------  
 
 
@@ -509,6 +601,8 @@ async function edit_expo_seq() {
             eventButtonEditArtwork();
 
             eventButtonSaveArtwork();
+
+            eventButtonDeleteArtwork();
 
         }//ENDE FUNKTION edit_artwork_seq()
 
@@ -590,6 +684,80 @@ async function edit_expo_seq() {
                     console.log("data: ", data);
 
                 }//ENDE FUNKTION updateArtwork()
+
+                function eventButtonDeleteArtwork(){
+
+                    console.log("functionExecuted: eventButtonDeleteArtwork()");
+
+                    let buttonDeleteArtwork = document.getElementById("buttonDeleteArtwork");
+
+                    buttonDeleteArtwork.addEventListener("click", function(){
+
+                        console.log("elementClicked: buttonDeleteArtwork");
+
+                        let selectedArtworkID = loadFromLocalStorage("selectedArtworkID");
+
+                        let dashboardObject_original = loadFromLocalStorage("dashboardObject_original");
+
+                        let arrayArtwork = dashboardObject_original.arrayArtwork;
+
+                        let selectedArtwork = arrayArtwork.find(artwork => artwork.id == selectedArtworkID);
+
+                        let selectedArtworkName = selectedArtwork.title;
+
+                        //open window to confirm delete
+
+                        let confirmDelete = confirm("sure you want to delete the Artwork: " + selectedArtworkName + "?");
+
+                        if (confirmDelete == true) {
+
+                            console.log("confirmDelete: ", confirmDelete);
+
+                            deleteArtwork();
+
+                        } else {
+
+                            console.log("confirmDelete: ", confirmDelete);
+
+                        }
+
+
+
+                    })
+
+                }
+
+
+                async function deleteArtwork(){
+
+                    console.log("functionExecuted: deleteArtwork()");
+
+                    selectedArtworkID = await loadFromLocalStorage("selectedArtworkID");
+
+                    console.log("selectedArtworkID: ", selectedArtworkID);
+
+                    let { data, error } = await supa
+
+                    .from('Artwork')
+                    .delete()
+                    .eq('id', selectedArtworkID)
+
+                    if (error) {
+                        console.log("error: ", error);
+
+                    }
+
+
+                    console.log("data: ", data);
+
+                    //delete selectedArtworkID in local storage
+
+                    localStorage.removeItem("selectedArtworkID");
+
+                    //reload page
+                    location.reload();
+
+                }
 
 
 //ENDEN BEREICH edit_artwork_seq-----------------------------------------------------------------------------------------
@@ -805,6 +973,11 @@ async function edit_expo_seq() {
                     console.log("elementClicked: buttonUploadArtwork");
                 
                     uploadSelectedArtwork();
+
+                    buttonAddArtwork.style.display = "block";
+                    buttonUploadArtwork.style.display = "none";
+
+                    disablePointerEvents(inputUploadContainer);
                 
                 
                     });
@@ -966,8 +1139,7 @@ async function edit_expo_seq() {
                     }
                 
                 }//ENDE FUNKTION assignArtworkToExpo
-                
-                        
+                   
                 
                 //FUNKTION uploadArtwork
                 async function uploadArtworkSingle(artwork) {
@@ -1056,6 +1228,8 @@ async function edit_expo_seq() {
                 
                 
                 }
+
+              
 
 
                 /* //FUNKTION eventButtonArtworkAdd

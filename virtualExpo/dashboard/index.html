@@ -48,7 +48,7 @@
                 <input id="inputMailUser" type="text">
             
                 <label for="inputPassUser">Passwort</label>
-                <input id="inputPassUser" type="text">
+                <input type="password" id="inputPassUser" type="text"  >
             
                 </div>
             
@@ -76,7 +76,10 @@
         
         </section>
 
-        <div id="containerOrgaLogo" ></div>
+        <div id="containerOrgaLogo">
+
+            <img id="imgOrgaLogo" src="../00_media/04_svg/profilBild_icon.svg" alt="">
+        </div>
     
     </header>
 
@@ -118,6 +121,7 @@
                             </header>
         
                             <main id="mainSectionListExpo" >
+                                <p id="infoListExpoContainer"></p>
                                 <div id="listExpoContainer">
 
         
@@ -165,12 +169,16 @@
                                 
                                     <label for="inputExpoLink">External Link:</label>
                                     <input type="text" id="inputExpoLink" name="inputExpoLink" placeholder="link to realExpo"><br>
-                        
+                                    
+                                    
+                                    <button id="buttonDeleteExpo">Delete</button>
                         
                         
                                 
                                 </div>
 
+
+                                
 
                             </main>
         
@@ -213,6 +221,7 @@
                                     </header>
                 
                                     <main id="mainSectionListArtwork" >
+                                        <p id="infoListArtworkContainer"></p>
                                         
                                         <div id="listArtworkContainer">
 
@@ -328,11 +337,11 @@
                                             <input type="text" id="inputArtworkTitle" name="inputArtworkTitle" required placeholder="title of artwork"><br>
 
                                             <!-- input year -->
-                                            <label for="inputArtworkYear">Year:</label>
+                                            <label for="inputArtworkYear">Year [yyyy]:</label>
                                             <input type="text" id="inputArtworkYear" name="inputArtworkYear" required placeholder="year of creation"><br>
 
                                             <!-- input month -->
-                                            <label for="inputArtworkMonth">Month:</label>
+                                            <label for="inputArtworkMonth">Month [mm]:</label>
                                             <input type="text" id="inputArtworkMonth" name="inputArtworkMonth" placeholder="month of creation"><br>
 
                                             <!-- input medium -->
@@ -358,6 +367,9 @@
                                             <!-- input description -->
                                             <label for="inputArtworkDescription">Description:</label>
                                             <input type="text" id="inputArtworkDescription" name="inputArtworkDescription" required placeholder="description of creation"><br>
+
+
+                                            <button id="buttonDeleteArtwork">Delete</button>
 
                                             </div>
                                     </main>

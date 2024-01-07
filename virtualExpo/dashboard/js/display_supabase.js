@@ -42,6 +42,9 @@ editOrga_supabase.js = editieren der Daten bezüglich Orga in dashboardObject_mo
 
 */
 
+let infoListExpoContainer = document.getElementById("infoListExpoContainer");
+let infoListArtworkContainer = document.getElementById("infoListArtworkContainer");
+
 let currentExpoName;
 let currentExpoStart;
 let currentExpoEnd;
@@ -52,7 +55,7 @@ let newExpo;
 let newExpoHash;
 let newExpoURL;
 
-let defaultExpoName = "untitled";
+let defaultExpoName = "unnamedExpo";
 let defaultExpoStart = new Date().toISOString().slice(0, 10);
 let defaultExpoEnd = new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().slice(0, 10);
 
@@ -116,6 +119,11 @@ eventButtonNewExpo();
 
             //wenn arrayExpo nicht leer
             if (currentArrayExpo.length !== 0){
+
+            infoListExpoContainer.innerHTML = "";
+
+            enablePointerEvents(buttonEditExpo);
+            enablePointerEvents(buttonAddArtwork);
         
             await display_arrayExpo();
 
@@ -135,6 +143,17 @@ eventButtonNewExpo();
 
 
            /*  await selectLatestExpo();*/
+
+            } else {
+
+                listExpoContainer.innerHTML = "";
+
+                infoListExpoContainer.innerHTML = " no Expo created yet";
+
+                disablePointerEvents(buttonEditExpo);
+                disablePointerEvents(buttonAddArtwork);
+
+                
 
             }
 
@@ -821,26 +840,50 @@ eventButtonNewExpo();
 
             if (currentArrayExpo.length !== 0){
 
-            await display_arrayArtwork();
+                    
 
+                    await display_arrayArtwork();
+
+                    
+
+                    console.log("currentArrayArtworkExpo: ", currentArrayArtworkExpo);
+
+                    if (currentArrayArtworkExpo.length !== 0){
+
+
+                            infoListArtworkContainer.innerHTML = "";
+
+                            enablePointerEvents(buttonEditArtwork);
+
+                            await eventArtworkContainer();
+
+                            await check_selectedArtworkID_localStorage();
+
+                            
+
+                            await display_infoArtwork_seq();
+
+                } else {
+
+                        listArtworkContainer.innerHTML = "";
+
+                        disablePointerEvents(buttonEditArtwork);
+                        
+                        infoListArtworkContainer.innerHTML = " no Artwork added yet";
+    
+                    }
+
+        } else {
+
+            listArtworkContainer.innerHTML = "";
+
+            disablePointerEvents(buttonEditArtwork);
             
+            //infoListArtworkContainer.innerHTML = " no Artwork added yet";
 
-            console.log("currentArrayArtworkExpo: ", currentArrayArtworkExpo);
-
-            if (currentArrayArtworkExpo.length !== 0){
-
-            await eventArtworkContainer();
-
-            await check_selectedArtworkID_localStorage();
-
-            
-
-            await display_infoArtwork_seq();
+        
 
         }
-
-        }
-           
 
         }
 

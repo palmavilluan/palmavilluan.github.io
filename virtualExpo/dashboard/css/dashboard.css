@@ -227,6 +227,8 @@ button{
     #imgOrgaLogo{
         height: 100%;
         object-fit: contain;
+
+        border-radius: 100%;
     
     }
         
@@ -264,6 +266,12 @@ button{
 
 
 /* SECTION Expo================================================================================================================================================================================*/
+
+#infoListExpoContainer{
+    font-style: italic;
+    
+    
+}
 
 #listExpoContainer{
     width: 100%;
@@ -305,6 +313,11 @@ button{
 }
 
 
+#buttonDeleteExpo{
+    margin-top: 2vw;
+}
+
+
 /* SECTION Artwork ================================================================================================================================================================================*/
 
 
@@ -323,6 +336,13 @@ button{
     width: 50%;
    
 }
+
+#infoListArtworkContainer{
+    font-style: italic;
+    
+    
+}
+
 
 .artworkContainer{
     cursor: pointer;
@@ -354,6 +374,11 @@ button{
     max-height: 100%;
 
     object-fit: contain;
+}
+
+
+#buttonDeleteArtwork{
+    margin-top: 2vw;
 }
 
 
