@@ -8,7 +8,7 @@ export function main(expoNameImport, expoYearImport, orgaNameImport, orgaURLImpo
     let expoName = expoNameImport;
     let expoYear = expoYearImport;
     let orgaName = orgaNameImport;
-    let orgaURL = orgaNameImport;
+    let orgaURL = orgaURLImport;
 
     let screenState = "full";
 
