@@ -4,11 +4,11 @@ console.log("fileLoaded: script.js");
 
 
 
-export function main(expoNameImport, expoYearImport, orgaNameImport) {
+export function main(expoNameImport, expoYearImport, orgaNameImport, orgaURLImport = "plazhalter") {
     let expoName = expoNameImport;
     let expoYear = expoYearImport;
     let orgaName = orgaNameImport;
-    let orgaURL = 'plazhalter';
+    let orgaURL = orgaNameImport;
 
     let screenState = "full";
 
@@ -379,16 +379,19 @@ function hideInfo(targetInfo){
 function event_profilBild_icon() {
 
     profilBild_icon.addEventListener("click", function () {
-
-        window.open(orgaURL, "_blank");
+        console.log("iconClicked: profilBild_icon", orgaURL);
+        if (orgaURL && orgaURL != "plazhalter") {
+            window.open(orgaURL, "_blank");
+        }
 
     });
 
 
     profilBild_icon.addEventListener("mouseover", function () {
 
-        showInfo(profilBild_icon, "Link " + orgaName, overlayHeaderInfo);
-
+        if (orgaURL && orgaURL != "plazhalter") {
+            showInfo(profilBild_icon, "Link " + orgaName, overlayHeaderInfo);
+        }
         mouseOverOpacity(profilBild_icon);
 
     

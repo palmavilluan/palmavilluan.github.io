@@ -82,7 +82,13 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////// Calling the Js file for styling overlay ////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  main(expoData[0].expoName, expoOrganizerData[0].orgaName, expoData[0].expoDate);
+  
+  if (expoOrganizerData[0].orgaLink){
+    main(expoData[0].expoName, expoOrganizerData[0].orgaName, expoData[0].expoDate, expoOrganizerData[0].orgaLink);
+  }
+  else {
+    main(expoData[0].expoName, expoOrganizerData[0].orgaName, expoData[0].expoDate);
+  }
 });
 
 
@@ -372,7 +378,6 @@ function handleImageClick(i, data, navigation = false, out = false) {
         document.querySelector('#camera_'+j).setAttribute('active', 'false');
         document.querySelector('#nextImage_'+j).style.display = 'none';
         document.querySelector('#image'+j).setAttribute('visible', 'false');
-
         document.querySelector('#lastImage_'+j).style.display = 'none';
       }
     }
@@ -553,7 +558,7 @@ function createBasicRoomLight(segmentHeight, light) {
     document.getElementById("aScene").appendChild(newLight);
 
     let ambientLight = document.createElement("a-light");
-      ambientLight.setAttribute("light", "type: ambient; castShadow: true");
+      ambientLight.setAttribute("light", "type: ambient;");
       ambientLight.setAttribute("color", "white");
       ambientLight.setAttribute("intensity", "0.86");
     document.getElementById("aScene").appendChild(ambientLight);

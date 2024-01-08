@@ -264,6 +264,7 @@ a{
     background-color: rgba(255, 255, 255, 0.3); /* Hintergrundfarbe mit Transparenz */
     padding: 10px;
     border-radius: 5px;
+    max-width: 30vw;
 }
 
 
@@ -346,6 +347,7 @@ a{
     color: #333; /* Dark grey text for readability */
     max-width: 80vw; /* Limit the width of the div */
     min-width: 50vw;
+    color: #a8a8a8;
 }
 
 #info_icon{
