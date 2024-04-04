@@ -4,7 +4,7 @@ console.log("fileLoaded: read_supabase.js");
 //ABSCHNITT variabeln ==================================================================================================
 
 import { supa } from './setup_supabase.js';
-import {currentUser} from './auth_supabase.js';
+import {currentUser, checkUser} from './auth_supabase.js';
 import {display_listExpo_seq, display_orga_seq} from './display_supabase.js';
 
 
@@ -47,6 +47,10 @@ getObjectDashboard_seq();
         async function getObjectDashboard_seq(){
             
                 console.log("functionExecuted: getObjectDashboard_seq()");
+
+                await checkUser();
+
+                console.log("currentUser:", currentUser)
             
                 await getObjectOrga();
 
