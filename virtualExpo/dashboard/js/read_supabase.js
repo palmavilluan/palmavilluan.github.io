@@ -81,6 +81,8 @@ getObjectDashboard_seq();
 
                     console.log("functionExecuted: getObjectOrga()");
 
+                    console.log("currentUser: ", currentUser);
+
                     let { data, error } = await supa
                     .from('Organisation')
                     .select('*')
