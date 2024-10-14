@@ -848,7 +848,7 @@ eventButtonNewExpo();
 
                     console.log("currentArrayArtworkExpo: ", currentArrayArtworkExpo);
 
-                    if (currentArrayArtworkExpo && currentArrayArtworkExpo.length !== 0){
+                    if (currentArrayArtworkExpo.length !== 0){
 
 
                             infoListArtworkContainer.innerHTML = "";
