@@ -65,8 +65,11 @@ let defaultWidth = "0";
 let defaultUnit = "cm";
 let defaultDescription = "no description";
 
-let storageArtworkURL = "https://jozvukgfgcazwazxxyjg.supabase.co/storage/v1/object/public/" + "Artwork/Public/";
-let storageLogoURL = "https://jozvukgfgcazwazxxyjg.supabase.co/storage/v1/object/public/" + "Logo/Public/";
+// let storageArtworkURL = "https://jozvukgfgcazwazxxyjg.supabase.co/storage/v1/object/public/" + "Artwork/Public/";
+// let storageLogoURL = "https://jozvukgfgcazwazxxyjg.supabase.co/storage/v1/object/public/" + "Logo/Public/";
+
+let storageArtworkURL = "https://iyyuoagdhhmhflhpesni.supabase.co/storage/v1/object/public/" + "Artwork/Public/";
+let storageLogoURL = "https://iyyuoagdhhmhflhpesni.supabase.co/storage/v1/object/public/" + "Logo/Public/";
 
 class Expo{
     constructor(expoName, expoStart, expoEnd, expoLink){

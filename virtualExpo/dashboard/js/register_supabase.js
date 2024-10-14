@@ -22,7 +22,7 @@ let mailUser;
 let passUser;
 let logoURL;
 let fileName;
-let storageLogoURL = "https://jozvukgfgcazwazxxyjg.supabase.co/storage/v1/object/public/" + "Logo/Public/";
+let storageLogoURL = "https://iyyuoagdhhmhflhpesni.supabase.co/storage/v1/object/public/" + "Logo/Public/";
 
 let checkEmailConfirmationInterval;
 
