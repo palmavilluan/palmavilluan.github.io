@@ -90,7 +90,7 @@ function eventButtonLogout() {
 
 
 //FUNKTION checkUser()
-async function checkUser() {
+export async function checkUser() {
     console.log("functionExecuted: checkUser()");
 
     
@@ -103,15 +103,19 @@ async function checkUser() {
     
     const { data, error } = await supa.auth.getSession()
 
-    //console.log("data: ", data);
+    //console.log("data111: ", data);
 
     if (data.session) {
 
+    //console.log("data: ", data);
+
     let user = data.session.user;
+
+    //console.log("user111: ", user);
     
     currentUser = user;
 
-    console.log("infoUser: authenticated as ", data.session.user);
+    console.log("currentUser: authenticated as ", data.session.user);
 
     updateUserStatus(user);
 
@@ -271,7 +275,7 @@ function updateUserStatus(user) {
 
     
     if (user) {
-        console.log("infoUser: authenticated as", user.email );
+        console.log("currentUser: authenticated as", user.email );
 
         for (let i = 0; i < elementsAuthTrue.length; i++) {
             elementsAuthTrue[i].style.display = "block";
@@ -329,12 +333,12 @@ function updateUserStatus(user) {
     //console.log("supabaseClient: ", supa);
 
     if (event === "SIGNED_IN" && session) {
-        console.log("infoUser: signed in as ", session.user);
+        console.log("currentUser: signed in as ", session.user);
         
         updateUserStatus(session.user);
 
     } else if (event === "SIGNED_IN" && !session) {
-        console.log("infoUser: signed in as ", session.user);
+        console.log("currentUser: signed in as ", session.user);
 
         //reload page
         window.location.reload();}
