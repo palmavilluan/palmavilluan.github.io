@@ -1,5 +1,12 @@
-
 lars/sky.psd
 sft
 .DS_Store
 virtualExpo/.DS_Store
+sftp.json
+.vscode/sftp.json
+.vscode/
+
+**/sftp.json
+**/.vscode/sftp.json
+
+**/.vscode/

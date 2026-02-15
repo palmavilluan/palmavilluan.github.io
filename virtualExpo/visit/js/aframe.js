@@ -83,11 +83,13 @@ document.querySelector('a-scene').addEventListener('loaded', async function () {
   ///////////////////////////////////// Calling the Js file for styling overlay ////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
+  console.log(expoData)
+
   if (expoOrganizerData[0].orgaLink){
-    main(expoData[0].expoName, expoOrganizerData[0].orgaName, expoData[0].expoDate, expoOrganizerData[0].orgaLink);
+    main(expoData[0].expoName, expoData[0].expoStart, expoData[0].expoEnd, expoOrganizerData[0].orgaName, expoOrganizerData[0].orgaLink);
   }
   else {
-    main(expoData[0].expoName, expoOrganizerData[0].orgaName, expoData[0].expoDate);
+    main(expoData[0].expoName, expoData[0].expoStart, expoData[0].expoEnd, expoOrganizerData[0].orgaName);
   }
 });
 

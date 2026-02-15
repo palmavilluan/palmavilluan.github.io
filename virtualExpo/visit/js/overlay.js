@@ -4,9 +4,12 @@ console.log("fileLoaded: script.js");
 
 
 
-export function main(expoNameImport, expoYearImport, orgaNameImport, orgaURLImport = "plazhalter") {
+export function main(expoNameImport, expoStartImport, expoEndImport, orgaNameImport, orgaURLImport = "plazhalter") {
     let expoName = expoNameImport;
-    let expoYear = expoYearImport;
+    let expoStart = expoStartImport;
+    let expoEnd = expoEndImport;
+    let expoYear = get_expoYear(expoStart, expoEnd);
+
     let orgaName = orgaNameImport;
     let orgaURL = orgaURLImport;
     let screenState = "full";
@@ -439,6 +442,17 @@ function event_orgaName_text() {
         });
 
 }//ENDE FUNKTION event_orgaName_text()
+
+//FUNKTION get_expoYear()
+function get_expoYear(expoStart, expoEnd) {
+  const startYear = new Date(expoStart).getFullYear();
+  const endYear = new Date(expoEnd).getFullYear();
+
+  return startYear === endYear
+    ? startYear.toString()
+    : `${startYear}–${endYear}`;
+}//ENDE FUNKTION get_expoYear()
+
 
 //FUNKTION event_linkKopieren_icon()
 function event_linkKopieren_icon() {
