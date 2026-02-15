@@ -19,6 +19,7 @@ let bigdata = {};
 
 let isImageInfoVisible = false;
 
+let default_expoHash = 'a3bc52ce';
 
 
 document.querySelector('a-scene').addEventListener('loaded', async function () {
@@ -168,7 +169,7 @@ function getExpoHashFromURL() {
     // Wenn der Benutzer die Eingabe abbricht oder nichts eingibt
     if (userInput == null || userInput.trim() === "") {
       // Füge "?1" an die aktuelle URL an
-      window.location.href = url + '?beispielExpo'; 
+      window.location.href = url + '?' + default_expoHash; 
     } else {
       // Wenn der Benutzer eine gültige Eingabe macht, aktualisiere die URL
       window.location.href = url + '?' + userInput;
