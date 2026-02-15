@@ -156,7 +156,36 @@ async function getImagesFromSupabase(expoID) {
 }////////////////////////////////////////////////// get all images from supabase ende -------------------------------------
 
 /////////////////////////////////////////////////// get expoHash from URL //////////////////////////////////////////////////
+
 function getExpoHashFromURL() {
+  const url = window.location.href;
+  const queryIndex = url.lastIndexOf('?');
+
+  // If no ? exists OR nothing after ?, redirect to default
+  if (queryIndex === -1 || queryIndex === url.length - 1) {
+    window.location.href = url.split('?')[0] + '?' + default_expoHash;
+    return;
+  }
+
+  let expoHash = url.substring(queryIndex + 1).replace(/%20/g, "");
+
+  // Handle lightoff flag
+  if (expoHash.includes('lightoff')) {
+    light = false;
+    expoHash = expoHash.replace(/lightoff/g, "");
+  }
+
+  // Handle multiple hashes separated by comma
+  if (expoHash.includes(',')) {
+    expoHash = expoHash.split(',');
+  }
+
+  return expoHash;
+}
+
+
+
+/* function getExpoHashFromURL2() {
   let url = window.location.href;
   let expoHash = url.substring(url.lastIndexOf('?') + 1);
   expoHash = expoHash.replace(/%20/g, "");
@@ -185,7 +214,8 @@ function getExpoHashFromURL() {
   }
   
   return expoHash;
-}////////////////////////////////////////////////// get expoHash from URL ende ---------------------------------------------
+} */
+////////////////////////////////////////////////// get expoHash from URL ende ---------------------------------------------
 
 /////////////////////////////////////////////////// get expoID from expoHash ///////////////////////////////////////////////
 async function getExpoIDFromHash(expoHash) {
